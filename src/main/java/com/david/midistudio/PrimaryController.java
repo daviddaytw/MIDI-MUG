@@ -6,7 +6,18 @@ import javafx.fxml.FXML;
 public class PrimaryController {
 
     @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+    private void switchToPlay() throws IOException {
+        App.setRoot("MIDIChooser");
     }
+
+    @FXML
+    private void switchToRecord() throws IOException {
+        App.setRoot("record");
+    }
+
+    @FXML
+    private void switchToSetting() throws IOException {
+        App.setRoot("setting");
+    }
+
 }
