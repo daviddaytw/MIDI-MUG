@@ -23,7 +23,7 @@ public class PrimaryController {
 
     @FXML
     private void switchToPlay() throws IOException {
-        App.setRoot("MIDIChooser");
+        App.setRoot("play");
     }
 
     @FXML

@@ -16,9 +16,11 @@
  */
 package com.david.midistudio;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -27,12 +29,18 @@ import javafx.fxml.Initializable;
  */
 public class PlayController implements Initializable {
 
+    private File midi;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open a MIDI File to Play!");
+        FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("MIDI File (*.midi)", "*.midi");
+        fileChooser.getExtensionFilters().add(extension);
+        this.midi = fileChooser.showOpenDialog(App.stage);
     }
 
 }
