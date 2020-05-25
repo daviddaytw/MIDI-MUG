@@ -38,7 +38,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: MIDI-Studio_Windows_$(git rev-parse --short "$GITHUB_SHA").jar
-        path: target/midi-studio-1.0-SNAPSHOT-jar-with-dependencies.jar
+        path: target\midi-studio-1.0-SNAPSHOT-jar-with-dependencies.jar
 
   macOS:
     runs-on: macos-latest
