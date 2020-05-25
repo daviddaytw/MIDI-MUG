@@ -19,7 +19,9 @@ package com.david.midistudio;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 
 /**
@@ -29,6 +31,11 @@ import javafx.stage.FileChooser;
  */
 public class PlayController implements Initializable {
 
+    @FXML
+    private StackPane keyboard;
+    @FXML
+    private StackPane timeline;
+
     private File midi;
 
     /**
@@ -36,11 +43,13 @@ public class PlayController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open a MIDI File to Play!");
-        FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("MIDI File (*.midi)", "*.midi");
+        FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("MIDI File (*.mid)", "*.mid");
         fileChooser.getExtensionFilters().add(extension);
         this.midi = fileChooser.showOpenDialog(App.stage);
+        App.stage.setMaximized(true);
     }
 
 }

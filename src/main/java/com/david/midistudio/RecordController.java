@@ -18,7 +18,9 @@ package com.david.midistudio;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -27,12 +29,17 @@ import javafx.fxml.Initializable;
  */
 public class RecordController implements Initializable {
 
+    @FXML
+    private VBox instrumentsPane;
+    @FXML
+    private VBox sheetsPane;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        App.stage.setMaximized(true);
     }
 
 }
