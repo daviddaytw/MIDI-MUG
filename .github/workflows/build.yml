@@ -19,7 +19,7 @@ jobs:
       run: mvn clean compile assembly:single
     - uses: actions/upload-artifact@v1
       with:
-        name: "MIDI-Studio_Linux_$GITHUB_SHA"
+        name: MIDI-Studio_Linux_${GITHUB_SHA}
         path: target
 
   Windows:
@@ -34,7 +34,7 @@ jobs:
       run: mvn clean compile assembly:single
     - uses: actions/upload-artifact@v1
       with:
-        name: "MIDI-Studio_Windows_$GITHUB_SHA"
+        name: MIDI-Studio_Windows_${GITHUB_SHA}
         path: target
 
   macOS:
@@ -49,5 +49,5 @@ jobs:
       run: mvn clean compile assembly:single
     - uses: actions/upload-artifact@v1
       with:
-        name: "MIDI-Studio_macOS_$GITHUB_SHA"
+        name: MIDI-Studio_macOS_${GITHUB_SHA}
         path: target
