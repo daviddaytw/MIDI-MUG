@@ -1,34 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.david.midimug.PrimaryController">
-   <children>
-      <HBox prefHeight="160.0" prefWidth="360.0">
-         <children>
-            <Button fx:id="primaryButton" onAction="#switchToPlay" prefHeight="160.0" prefWidth="120.0" text="Play" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#switchToRecord" prefHeight="160.0" prefWidth="120.0" text="Record" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#switchToSetting" prefHeight="160.0" prefWidth="120.0" text="Setting" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-   </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.david.midimug.PrimaryController">
+    <children>
+        <StackPane fx:id="timeline" VBox.vgrow="ALWAYS" />
+        <StackPane fx:id="keyboard" prefHeight="150.0" />
+    </children>
 </VBox>
