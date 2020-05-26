@@ -14,26 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midistudio;
+package com.david.midimug;
 
-import java.io.IOException;
-import javafx.fxml.FXML;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
 
-public class PrimaryController {
+/**
+ * FXML Controller class
+ *
+ * @author david
+ */
+public class SettingController implements Initializable {
 
-    @FXML
-    private void switchToPlay() throws IOException {
-        App.setRoot("play");
-    }
-
-    @FXML
-    private void switchToRecord() throws IOException {
-        App.setRoot("record");
-    }
-
-    @FXML
-    private void switchToSetting() throws IOException {
-        App.setRoot("setting");
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
     }
 
 }

@@ -14,25 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midistudio;
+package com.david.midimug;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
  *
  * @author david
  */
-public class SettingController implements Initializable {
+public class RecordController implements Initializable {
+
+    @FXML
+    private VBox instrumentsPane;
+    @FXML
+    private VBox sheetsPane;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        App.stage.setMaximized(true);
     }
 
 }

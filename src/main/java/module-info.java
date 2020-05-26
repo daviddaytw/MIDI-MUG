@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-module com.david.midistudio {
+module com.david.midimug {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.base;
 
-    opens com.david.midistudio to javafx.fxml;
-    exports com.david.midistudio;
+    opens com.david.midimug to javafx.fxml;
+    exports com.david.midimug;
 }
