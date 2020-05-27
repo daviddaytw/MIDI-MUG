@@ -50,6 +50,7 @@ public class PrimaryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         KeyboardRenderer.renderPianoKeys(keyboard);
         MenuRenderer.renderInstrumentsMenu(instrumentsMenu);
+        MenuRenderer.renderDevicesMenu(devicesMenu);
     }
 
     @FXML

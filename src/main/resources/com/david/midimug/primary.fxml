@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -20,6 +21,7 @@
             <Menu fx:id="devicesMenu" mnemonicParsing="false" text="Devices">
               <items>
                 <MenuItem mnemonicParsing="false" text="Refresh" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">

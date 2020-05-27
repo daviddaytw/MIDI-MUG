@@ -16,8 +16,11 @@
  */
 package com.david.midimug.render;
 
+import com.david.midimug.handler.MidiDevices;
 import com.david.midimug.handler.MidiInstruments;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javax.sound.midi.MidiUnavailableException;
 
@@ -40,6 +43,16 @@ public class MenuRenderer {
             }
         } catch (MidiUnavailableException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public static void renderDevicesMenu(Menu target) {
+        ObservableList<MenuItem> nodeList = target.getItems();
+        nodeList.remove(2, nodeList.size());
+        String[] devices = MidiDevices.getDevicesName();
+        for (String i : devices) {
+            RadioMenuItem item = new RadioMenuItem(i);
+            nodeList.add(item);
         }
     }
 }
