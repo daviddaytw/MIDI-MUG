@@ -51,7 +51,7 @@ public class KeyboardRenderer {
             key.setStyle("-fx-background-color: #000000;");
             key.setPrefWidth(blackKeyWidth);
             key.setPrefHeight(blackKeyHeight);
-            double x = i * whiteKeyWidth + whiteKeyWidth / 2;
+            double x = i * whiteKeyWidth + (whiteKeyWidth - blackKeyWidth / 2);
             x += (i + 4) / 5 * whiteKeyWidth + (i + 2) / 5 * whiteKeyWidth;
             key.setTranslateX(x);
             nodeList.add(key);
