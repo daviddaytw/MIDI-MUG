@@ -29,7 +29,7 @@
           </Menu>
         </menus>
       </MenuBar>
-        <StackPane fx:id="timeline" VBox.vgrow="ALWAYS" />
-        <StackPane fx:id="keyboard" prefHeight="150.0" />
+        <StackPane fx:id="timeline" style="-fx-background-color: #121212;" VBox.vgrow="ALWAYS" />
+        <StackPane fx:id="keyboard" prefHeight="150.0" style="-fx-background-color: #121212;" />
     </children>
 </VBox>
