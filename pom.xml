@@ -41,9 +41,8 @@
                     <compress>2</compress>
                     <noHeaderFiles>true</noHeaderFiles>
                     <noManPages>true</noManPages>
-                    <launcher>midi-mug</launcher>
+                    <launcher>MIDI-MUG</launcher>
                     <jlinkImageName>MIDI-MUG</jlinkImageName>
-                    <jlinkZipName>MIDI-MUG</jlinkZipName>
                 </configuration>
             </plugin>
         </plugins>
