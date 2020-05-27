@@ -17,7 +17,9 @@
 package com.david.midimug;
 
 import com.david.midimug.render.KeyboardRenderer;
+import com.david.midimug.render.LoadFileRenderer;
 import com.david.midimug.render.MenuRenderer;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -48,5 +50,10 @@ public class PrimaryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         KeyboardRenderer.renderPianoKeys(keyboard);
         MenuRenderer.renderInstrumentsMenu(instrumentsMenu);
+    }
+
+    @FXML
+    private void openFile() {
+        File source = LoadFileRenderer.renderMidiChooser();
     }
 }

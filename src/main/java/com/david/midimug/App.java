@@ -16,13 +16,12 @@
  */
 package com.david.midimug;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 /**
  * JavaFX App
@@ -30,7 +29,7 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-    public static Stage stage;
+    private static Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -40,6 +39,10 @@ public class App extends Application {
         stage.setMaximized(true);
         stage.show();
         this.stage = stage;
+    }
+
+    public static Stage getAppStage() {
+        return stage;
     }
 
     static void setRoot(String fxml) throws IOException {
