@@ -17,17 +17,13 @@
 package com.david.midimug;
 
 import com.david.midimug.render.KeyboardRenderer;
-import java.io.File;
+import com.david.midimug.render.MenuRenderer;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Screen;
 
 /**
  * FXML Controller class
@@ -36,6 +32,10 @@ import javafx.stage.Screen;
  */
 public class PrimaryController implements Initializable {
 
+    @FXML
+    private Menu instrumentsMenu;
+    @FXML
+    private Menu devicesMenu;
     @FXML
     private StackPane keyboard;
     @FXML
@@ -47,5 +47,6 @@ public class PrimaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         KeyboardRenderer.renderPianoKeys(keyboard);
+        MenuRenderer.renderInstrumentsMenu(instrumentsMenu);
     }
 }
