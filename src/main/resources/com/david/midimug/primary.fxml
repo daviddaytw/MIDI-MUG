@@ -9,29 +9,29 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.david.midimug.PrimaryController">
     <children>
-      <MenuBar>
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-                  <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open..." />
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-            <Menu fx:id="instrumentsMenu" mnemonicParsing="false" text="Insturments" />
-            <Menu fx:id="devicesMenu" mnemonicParsing="false" text="Devices">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Refresh" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-              </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-        <StackPane fx:id="timeline" style="-fx-background-color: #121212;" VBox.vgrow="ALWAYS" />
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open..." />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                    </items>
+                </Menu>
+                <Menu fx:id="instrumentsMenu" mnemonicParsing="false" text="Insturments" />
+                <Menu fx:id="devicesMenu" mnemonicParsing="false" text="Devices">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Refresh" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <StackPane fx:id="sheet" style="-fx-background-color: #121212;" VBox.vgrow="ALWAYS" />
         <StackPane fx:id="keyboard" prefHeight="150.0" style="-fx-background-color: #121212;" />
     </children>
 </VBox>

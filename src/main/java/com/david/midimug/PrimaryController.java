@@ -16,16 +16,20 @@
  */
 package com.david.midimug;
 
+import com.david.midimug.handler.MidiProcessor;
+import com.david.midimug.handler.Note;
 import com.david.midimug.render.KeyboardRenderer;
 import com.david.midimug.render.LoadFileRenderer;
 import com.david.midimug.render.MenuRenderer;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Menu;
 import javafx.scene.layout.StackPane;
+import javax.sound.midi.InvalidMidiDataException;
 
 /**
  * FXML Controller class
@@ -41,7 +45,7 @@ public class PrimaryController implements Initializable {
     @FXML
     private StackPane keyboard;
     @FXML
-    private StackPane timeline;
+    private StackPane sheet;
 
     /**
      * Initializes the controller class.
@@ -55,6 +59,11 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void openFile() {
-        File source = LoadFileRenderer.renderMidiChooser();
+        try {
+            File source = LoadFileRenderer.renderMidiChooser();
+            Note[] noteList = MidiProcessor.getNotes(source);
+        } catch (InvalidMidiDataException | IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
