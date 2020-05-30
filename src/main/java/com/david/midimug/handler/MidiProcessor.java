@@ -36,8 +36,7 @@ public class MidiProcessor {
     private static final int NOTE_ON = 0x90;
     private static final int NOTE_OFF = 0x80;
 
-    public static Note[] getNotes(File source) throws InvalidMidiDataException, IOException {
-        Sequence sequence = MidiSystem.getSequence(source);
+    public static ArrayList<Note> getNoteList(Sequence sequence) {
         ArrayList<Note> noteList = new ArrayList<>();
 
         int trackNumber = 0;
@@ -76,8 +75,23 @@ public class MidiProcessor {
             }
         }
 
-        Note[] notes = new Note[noteList.size()];
-        notes = noteList.toArray(notes);
-        return notes;
+        return noteList;
+    }
+
+    public static Sheet getSheet(File source) throws InvalidMidiDataException, IOException {
+        Sequence sequence = MidiSystem.getSequence(source);
+
+        float divisionType = sequence.getDivisionType();
+        int resolution;
+        if (divisionType == Sequence.PPQ) {
+            resolution = sequence.getResolution();
+        } else {
+            System.err.print("Unhandled division type: ");
+            System.err.println(divisionType);
+            resolution = -1;
+        }
+        ArrayList noteList = getNoteList(sequence);
+
+        return new Sheet(noteList, resolution);
     }
 }
