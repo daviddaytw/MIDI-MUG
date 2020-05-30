@@ -16,6 +16,7 @@
  */
 package com.david.midimug.render;
 
+import java.util.HashMap;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -29,32 +30,49 @@ import javafx.stage.Screen;
 public class KeyboardRenderer {
 
     private final static int WHITE_KEY_COUNT = 52, BLACK_KEY_COUNT = 36;
+    private final static HashMap<Integer, Button> piano_keys = new HashMap<>();
 
     public static void renderPianoKeys(StackPane target) {
         target.setAlignment(Pos.TOP_LEFT);
         ObservableList nodeList = target.getChildren();
+        nodeList.clear();
+        piano_keys.clear();
 
         final double whiteKeyHeight = target.getPrefHeight();
-        final double whiteKeyWidth = Screen.getPrimary().getBounds().getWidth() / WHITE_KEY_COUNT;
+        final double whiteKeyWidth = getPianoWhiteKeyWidth();
         for (int i = 0; i < WHITE_KEY_COUNT; i++) {
             Button key = new Button();
             key.setPrefWidth(whiteKeyWidth);
             key.setPrefHeight(whiteKeyHeight);
             key.setTranslateX(i * whiteKeyWidth);
             nodeList.add(key);
+            int key_padding = 2 * i - (i + 5) / 7 - (i + 2) / 7;
+            int midi_position = 21 + key_padding;
+            piano_keys.put(midi_position, key);
         }
 
         final double blackKeyHeight = whiteKeyHeight * 0.6;
-        final double blackKeyWidth = whiteKeyWidth * 0.7;
+        final double blackKeyWidth = getPianoBlackKeyWidth();
         for (int i = 0; i < BLACK_KEY_COUNT; i++) {
             Button key = new Button();
             key.setStyle("-fx-background-color: #000000;");
             key.setPrefWidth(blackKeyWidth);
             key.setPrefHeight(blackKeyHeight);
             double x = i * whiteKeyWidth + (whiteKeyWidth - blackKeyWidth / 2);
-            x += (i + 4) / 5 * whiteKeyWidth + (i + 2) / 5 * whiteKeyWidth;
+            int key_padding = (i + 4) / 5 + (i + 2) / 5;
+            x += key_padding * whiteKeyWidth;
             key.setTranslateX(x);
             nodeList.add(key);
+            int midi_position = 22 + 2 * i + key_padding;
+            piano_keys.put(midi_position, key);
         }
+    }
+
+    public static double getPianoWhiteKeyWidth() {
+        return Screen.getPrimary().getBounds().getWidth() / WHITE_KEY_COUNT;
+    }
+
+    public static double getPianoBlackKeyWidth() {
+        return getPianoWhiteKeyWidth() * 0.7;
     }
 }
