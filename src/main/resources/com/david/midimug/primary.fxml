@@ -4,7 +4,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.david.midimug.PrimaryController">
@@ -31,7 +31,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <StackPane fx:id="sheet" style="-fx-background-color: #121212;" VBox.vgrow="ALWAYS" />
-        <StackPane fx:id="keyboard" prefHeight="150.0" style="-fx-background-color: #121212;" />
+        <Pane fx:id="sheet" style="-fx-background-color: #121212;" VBox.vgrow="ALWAYS" />
+        <Pane fx:id="keyboard" minHeight="150.0" prefHeight="150.0" style="-fx-background-color: #121212;" />
     </children>
 </VBox>

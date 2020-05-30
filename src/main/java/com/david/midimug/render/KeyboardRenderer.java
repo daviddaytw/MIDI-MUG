@@ -18,9 +18,8 @@ package com.david.midimug.render;
 
 import java.util.HashMap;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 
 /**
@@ -32,8 +31,7 @@ public class KeyboardRenderer {
     private final static int WHITE_KEY_COUNT = 52, BLACK_KEY_COUNT = 36;
     private final static HashMap<Integer, Button> piano_keys = new HashMap<>();
 
-    public static void renderPianoKeys(StackPane target) {
-        target.setAlignment(Pos.TOP_LEFT);
+    public static void renderPianoKeys(Pane target) {
         ObservableList nodeList = target.getChildren();
         nodeList.clear();
         piano_keys.clear();
@@ -44,7 +42,7 @@ public class KeyboardRenderer {
             Button key = new Button();
             key.setPrefWidth(whiteKeyWidth);
             key.setPrefHeight(whiteKeyHeight);
-            key.setTranslateX(i * whiteKeyWidth);
+            key.setLayoutX(i * whiteKeyWidth);
             nodeList.add(key);
             int key_padding = 2 * i - (i + 5) / 7 - (i + 2) / 7;
             int midi_position = 21 + key_padding;
@@ -61,7 +59,7 @@ public class KeyboardRenderer {
             double x = i * whiteKeyWidth + (whiteKeyWidth - blackKeyWidth / 2);
             int key_padding = (i + 4) / 5 + (i + 2) / 5;
             x += key_padding * whiteKeyWidth;
-            key.setTranslateX(x);
+            key.setLayoutX(x);
             nodeList.add(key);
             int midi_position = 22 + 2 * i + key_padding;
             piano_keys.put(midi_position, key);
@@ -74,5 +72,9 @@ public class KeyboardRenderer {
 
     public static double getPianoBlackKeyWidth() {
         return getPianoWhiteKeyWidth() * 0.7;
+    }
+
+    public static double getPianoKeyPositionX(int key) {
+        return piano_keys.get(key).getLayoutX();
     }
 }
