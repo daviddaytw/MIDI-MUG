@@ -19,6 +19,7 @@ package com.david.midimug.handler;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiMessage;
@@ -38,12 +39,13 @@ public class MidiProcessor {
 
     public static ArrayList<Note> getNoteList(Sequence sequence) {
         ArrayList<Note> noteList = new ArrayList<>();
+        HashMap<Integer, Long> buffer = new HashMap<>();
 
         int trackNumber = 0;
         for (Track track : sequence.getTracks()) {
             trackNumber++;
             System.out.println("Track " + trackNumber + ": size = " + track.size());
-            System.out.println();
+
             for (int i = 0; i < track.size(); i++) {
                 MidiEvent event = track.get(i);
                 MidiMessage message = event.getMessage();
@@ -54,17 +56,25 @@ public class MidiProcessor {
                     ShortMessage sm = (ShortMessage) message;
 
                     int key = sm.getData1();
-                    int velocity = sm.getData2();
 
                     switch (sm.getCommand()) {
                         case NOTE_ON: {
-                            Note note = new Note(key, tick, Note.STATUS_ON, velocity);
-                            noteList.add(note);
+                            if (!buffer.containsKey(key)) {
+                                buffer.put(key, tick);
+                            } else {
+                                System.err.println("Invalid MIDI File! Note is already on.");
+                            }
                             break;
                         }
                         case NOTE_OFF: {
-                            Note note = new Note(key, tick, Note.STATUS_OFF, velocity);
-                            noteList.add(note);
+                            if (buffer.containsKey(key)) {
+                                long timestamp = buffer.get(key).longValue();
+                                buffer.remove(key);
+                                Note note = new Note(key, timestamp, tick - timestamp);
+                                noteList.add(note);
+                            } else {
+                                System.err.println("Invalid MIDI File! Note off when it isn't on.");
+                            }
                             break;
                         }
                     }
@@ -82,6 +92,7 @@ public class MidiProcessor {
         Sequence sequence = MidiSystem.getSequence(source);
 
         float divisionType = sequence.getDivisionType();
+        long length = sequence.getMicrosecondLength();
         int resolution;
         if (divisionType == Sequence.PPQ) {
             resolution = sequence.getResolution();
@@ -92,6 +103,6 @@ public class MidiProcessor {
         }
         ArrayList noteList = getNoteList(sequence);
 
-        return new Sheet(noteList, resolution);
+        return new Sheet(noteList, resolution, length);
     }
 }

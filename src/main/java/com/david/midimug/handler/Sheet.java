@@ -26,8 +26,9 @@ public class Sheet {
 
     private final int resolution;
     private Note[] notes;
+    private long length;
 
-    Sheet(ArrayList<Note> noteList, int resolution) {
+    Sheet(ArrayList<Note> noteList, int resolution, long length) {
         notes = new Note[noteList.size()];
         notes = noteList.toArray(notes);
         this.resolution = resolution;
@@ -42,5 +43,9 @@ public class Sheet {
 
     public Note[] getNotes() {
         return notes;
+    }
+
+    public long getLength() {
+        return length;
     }
 }

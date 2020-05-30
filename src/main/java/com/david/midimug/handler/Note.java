@@ -23,19 +23,15 @@ package com.david.midimug.handler;
 public class Note {
 
     public static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
-    public static final boolean STATUS_ON = true;
-    public static final boolean STATUS_OFF = false;
 
     private final int key;
     private final long timestamp;
-    private final boolean status;
-    private final int velocity;
+    private final long length;
 
-    Note(int key, long timestamp, boolean status, int velocity) {
+    Note(int key, long timestamp, long length) {
         this.key = key;
         this.timestamp = timestamp;
-        this.status = status;
-        this.velocity = velocity;
+        this.length = length;
     }
 
     public int getKey() {
@@ -50,30 +46,20 @@ public class Note {
         return (key / 12) - 1;
     }
 
-    public int getVelocity() {
-        return velocity;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
     public long getTimeStamp() {
         return timestamp;
+    }
+
+    public long getLength() {
+        return length;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("@").append(getTimeStamp()).append(", ");
-
-        if (status) {
-            sb.append("Note on ");
-        } else {
-            sb.append("Note off ");
-        }
-        sb.append("at ").append(getNoteName()).append(getOctave()).append(", ");
-        sb.append("velocity ").append(getVelocity());
+        sb.append("@").append(getTimeStamp()).append(',');
+        sb.append("at:").append(getNoteName()).append(getOctave()).append(',');
+        sb.append("length:").append(getLength());
 
         return sb.toString();
     }
