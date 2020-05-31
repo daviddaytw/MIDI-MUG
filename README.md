@@ -21,11 +21,11 @@ Just go to [Release Page](https://github.com/dj6082013/MIDI-MUG/releases/) and d
 In `File` -> `Open...` select a MIDI file you want to play with.
 You can use your MIDI file or download it in the following site!
  
-- [BitMidi](https://bitmidi.com/) 
-- [midiworld.com](https://www.midiworld.com/)
-- [MIDI DB](https://www.mididb.com/)
+  - [BitMidi](https://bitmidi.com/) 
+  - [midiworld.com](https://www.midiworld.com/)
+  - [MIDI DB](https://www.mididb.com/)
 
-![Screenshot](/screenshot.png?raw=true "Screenshot")
+![Screenshot](https://github.com/dj6082013/MIDI-MUG/raw/master/screenshot.png?raw=true "Screenshot")
 
 ## Contributing
 
