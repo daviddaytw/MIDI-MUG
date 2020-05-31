@@ -32,7 +32,7 @@ import javafx.util.Duration;
  */
 public class SheetRenderer {
 
-    private static final long TIME_PAD = 8000;
+    private static final long TIME_PAD = 16;
     private static long tempo = 120;
 
     public static Timeline renderBarSheet(Pane target, Sheet sheet) {
@@ -55,7 +55,7 @@ public class SheetRenderer {
             bar.setArcHeight(10);
             bar.setArcWidth(bar.getWidth() / 3);
             bar.setLayoutX(KeyboardRenderer.getPianoKeyPositionX(i.getKey()));
-            bar.setVisible(false);
+            bar.setLayoutY(-bar.getHeight());
 
             KeyFrame start, end;
 
@@ -63,12 +63,11 @@ public class SheetRenderer {
             long end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet);
 
             start = new KeyFrame(
-                    Duration.millis(start_time + TIME_PAD),
-                    new KeyValue(bar.visibleProperty(), true),
+                    Duration.millis(start_time + TIME_PAD * target.getHeight()),
                     new KeyValue(bar.layoutYProperty(), -bar.getHeight())
             );
             end = new KeyFrame(
-                    Duration.millis(end_time + TIME_PAD),
+                    Duration.millis(end_time + TIME_PAD * target.getHeight()),
                     new KeyValue(bar.layoutYProperty(), target.getHeight())
             );
 
