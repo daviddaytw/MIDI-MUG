@@ -18,9 +18,13 @@ package com.david.midimug.render;
 
 import com.david.midimug.handler.Note;
 import com.david.midimug.handler.Sheet;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 /**
  *
@@ -28,7 +32,10 @@ import javafx.scene.shape.Rectangle;
  */
 public class SheetRenderer {
 
-    public static void renderBarSheet(Pane target, Sheet sheet) {
+    private static final long TIME_PAD = 8000;
+    private static long tempo = 120;
+
+    public static Timeline renderBarSheet(Pane target, Sheet sheet) {
         // reset sheet
         target.getChildren().clear();
 
@@ -37,19 +44,43 @@ public class SheetRenderer {
         clip.setHeight(target.getHeight());
         target.setClip(clip);
 
+        Timeline timeline = new Timeline();
+
         for (Note i : sheet.getNotes()) {
             Rectangle bar = new Rectangle();
             bar.setFill(Color.DODGERBLUE);
 
-            bar.setWidth(KeyboardRenderer.getPianoWhiteKeyWidth());
-            bar.setHeight(computeBarY(i.getLength(), sheet));
+            bar.setWidth(KeyboardRenderer.getPianoBlackKeyWidth());
+            bar.setHeight(computeTick(i.getLength(), sheet) / 10);
+            bar.setArcHeight(10);
+            bar.setArcWidth(bar.getWidth() / 3);
             bar.setLayoutX(KeyboardRenderer.getPianoKeyPositionX(i.getKey()));
-            bar.setLayoutY(-computeBarY(i.getTimeStamp(), sheet));
+            bar.setVisible(false);
+
+            KeyFrame start, end;
+
+            long start_time = computeTick(i.getTimeStamp(), sheet) - Math.round(target.getHeight() * computeTick(i.getLength(), sheet) / bar.getHeight());
+            long end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet);
+
+            start = new KeyFrame(
+                    Duration.millis(start_time + TIME_PAD),
+                    new KeyValue(bar.visibleProperty(), true),
+                    new KeyValue(bar.layoutYProperty(), -bar.getHeight())
+            );
+            end = new KeyFrame(
+                    Duration.millis(end_time + TIME_PAD),
+                    new KeyValue(bar.layoutYProperty(), target.getHeight())
+            );
+
+            timeline.getKeyFrames().addAll(start, end);
+
             target.getChildren().add(bar);
         }
+
+        return timeline;
     }
 
-    private static double computeBarY(long tick, Sheet sheet) {
-        return tick / (sheet.getResolution());
+    private static long computeTick(long tick, Sheet sheet) {
+        return tick * 60000 / sheet.getResolution() / tempo;
     }
 }

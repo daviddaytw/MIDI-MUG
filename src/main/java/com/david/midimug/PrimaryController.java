@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Menu;
@@ -63,7 +64,8 @@ public class PrimaryController implements Initializable {
         try {
             File source = LoadFileRenderer.renderMidiChooser();
             Sheet music_sheet = MidiProcessor.getSheet(source);
-            SheetRenderer.renderBarSheet(sheet, music_sheet);
+            Timeline timeline = SheetRenderer.renderBarSheet(sheet, music_sheet);
+            timeline.play();
         } catch (InvalidMidiDataException | IOException ex) {
             ex.printStackTrace();
         }
