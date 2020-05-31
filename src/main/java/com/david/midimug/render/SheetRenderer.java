@@ -50,23 +50,21 @@ public class SheetRenderer {
             Rectangle bar = new Rectangle();
             bar.setFill(Color.DODGERBLUE);
 
-            bar.setWidth(KeyboardRenderer.getPianoBlackKeyWidth());
+            bar.setWidth(KeyboardRenderer.getPianoWhiteKeyWidth());
             bar.setHeight(computeTick(i.getLength(), sheet) / 10);
             bar.setArcHeight(10);
             bar.setArcWidth(bar.getWidth() / 3);
             bar.setLayoutX(KeyboardRenderer.getPianoKeyPositionX(i.getKey()));
             bar.setLayoutY(-bar.getHeight());
 
-            KeyFrame start, end;
-
             long start_time = computeTick(i.getTimeStamp(), sheet) - Math.round(target.getHeight() * computeTick(i.getLength(), sheet) / bar.getHeight());
             long end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet);
 
-            start = new KeyFrame(
+            KeyFrame start = new KeyFrame(
                     Duration.millis(start_time + TIME_PAD * target.getHeight()),
                     new KeyValue(bar.layoutYProperty(), -bar.getHeight())
             );
-            end = new KeyFrame(
+            KeyFrame end = new KeyFrame(
                     Duration.millis(end_time + TIME_PAD * target.getHeight()),
                     new KeyValue(bar.layoutYProperty(), target.getHeight())
             );

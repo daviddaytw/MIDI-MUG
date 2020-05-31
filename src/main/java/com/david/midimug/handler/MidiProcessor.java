@@ -68,13 +68,17 @@ public class MidiProcessor {
                         }
                         case NOTE_OFF: {
                             if (buffer.containsKey(key)) {
-                                long timestamp = buffer.get(key).longValue();
+                                long timestamp = buffer.get(key);
                                 buffer.remove(key);
                                 Note note = new Note(key, timestamp, tick - timestamp);
                                 noteList.add(note);
                             } else {
                                 System.err.println("Invalid MIDI File! Note off when it isn't on.");
                             }
+                            break;
+                        }
+                        default: {
+                            System.err.println("Unhandled Command: " + sm.getCommand());
                             break;
                         }
                     }

@@ -35,6 +35,7 @@ public class Sheet {
         if (resolution == -1) {
             System.err.println("Bad resolution!");
         }
+        this.length = length;
     }
 
     public int getResolution() {
