@@ -28,7 +28,8 @@ import javafx.stage.Screen;
  */
 public class KeyboardRenderer {
 
-    private final static int WHITE_KEY_COUNT = 52, BLACK_KEY_COUNT = 36;
+    private final static int WHITE_KEY_COUNT = 52;
+    private final static int BLACK_KEY_COUNT = 36;
     private final static HashMap<Integer, Button> piano_keys = new HashMap<>();
 
     public static void renderPianoKeys(Pane target) {
