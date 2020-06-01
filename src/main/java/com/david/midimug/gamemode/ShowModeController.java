@@ -30,7 +30,7 @@ import javafx.util.Duration;
  *
  * @author david
  */
-public class FluidModeController extends AbstractModeController {
+public class ShowModeController extends AbstractModeController {
 
     @Override
     public KeyFrame onNoteShow(Duration time, Pane pane, Rectangle bar, Note note) {
@@ -42,6 +42,7 @@ public class FluidModeController extends AbstractModeController {
     public KeyFrame onNoteStart(Duration time, Pane pane, Rectangle bar, Note note) {
         KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight() - bar.getHeight());
         return new KeyFrame(time, (ActionEvent t) -> {
+            KeyboardRenderer.pressKey(note.getKey());
             MidiInstruments.noteOn(note.getKey());
         }, barY);
     }
@@ -50,23 +51,22 @@ public class FluidModeController extends AbstractModeController {
     public KeyFrame onNoteEnd(Duration time, Pane pane, Rectangle bar, Note note) {
         KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight());
         return new KeyFrame(time, (ActionEvent t) -> {
+            KeyboardRenderer.releaseKey(note.getKey());
             MidiInstruments.noteOff(note.getKey());
         }, barY);
     }
 
     @Override
     public void onUserPress(int key) {
-        KeyboardRenderer.pressKey(key);
     }
 
     @Override
     public void onUserRelease(int key) {
-        KeyboardRenderer.releaseKey(key);
     }
 
     @Override
     public long getScore() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0;
     }
 
 }
