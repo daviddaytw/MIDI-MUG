@@ -38,13 +38,14 @@ public class MenuRenderer {
     public static void renderInstrumentsMenu(Menu target) {
         try {
             Instrument[] instruments = MidiInstruments.getInstruments();
-            for (final Instrument i : instruments) {
-                RadioMenuItem item = new RadioMenuItem(i.getName());
-                if (i.equals(MidiInstruments.getDefaultInstrument())) {
-                    MidiInstruments.selectInstrument(i);
+            for (int i = 0; i < instruments.length; i++) {
+                Instrument instr = instruments[i];
+                RadioMenuItem item = new RadioMenuItem(instr.getName());
+                if (i == MidiInstruments.DEFAULT_INSTRUMENT) {
+                    MidiInstruments.selectInstrument(instr);
                 }
                 item.setOnAction((ActionEvent t) -> {
-                    MidiInstruments.selectInstrument(i);
+                    MidiInstruments.selectInstrument(instr);
                 });
                 target.getItems().add(item);
             }
