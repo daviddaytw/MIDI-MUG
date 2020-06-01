@@ -30,6 +30,8 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
 import javafx.scene.layout.Pane;
 import javax.sound.midi.InvalidMidiDataException;
@@ -68,7 +70,9 @@ public class PrimaryController implements Initializable {
             Timeline timeline = SheetRenderer.renderBarSheet(sheet, music_sheet);
             timeline.play();
         } catch (InvalidMidiDataException | IOException ex) {
-            ex.printStackTrace();
+            final Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.showAndWait();
         }
     }
 

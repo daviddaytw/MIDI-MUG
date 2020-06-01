@@ -22,6 +22,8 @@ import com.david.midimug.handler.MidiInstruments;
 import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
@@ -50,7 +52,9 @@ public class MenuRenderer {
                 target.getItems().add(item);
             }
         } catch (MidiUnavailableException ex) {
-            ex.printStackTrace();
+            final Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.showAndWait();
         }
     }
 
@@ -65,7 +69,9 @@ public class MenuRenderer {
                     MidiDevices.selectDevice(device);
                     MidiDevices.setGameController(GameModeUtils.getGameMode());
                 } catch (MidiUnavailableException ex) {
-                    ex.printStackTrace();
+                    final Alert alert = new Alert(AlertType.ERROR);
+                    alert.setContentText(ex.getLocalizedMessage());
+                    alert.showAndWait();
                 }
             });
             return item;
