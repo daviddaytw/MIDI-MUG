@@ -17,7 +17,15 @@
 package com.david.midimug.render;
 
 import com.david.midimug.App;
+import com.david.midimug.gamemode.AbstractModeController;
+import com.david.midimug.gamemode.FluidModeController;
+import com.david.midimug.gamemode.ShowModeController;
 import java.io.File;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.stage.FileChooser;
 
 /**
@@ -32,5 +40,32 @@ public class LoadFileRenderer {
         FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("MIDI File (*.mid)", "*.mid");
         fileChooser.getExtensionFilters().add(extension);
         return fileChooser.showOpenDialog(App.getAppStage());
+    }
+
+    public static AbstractModeController renderModeChooser() {
+
+        final ChoiceDialog<String> choiceDialog = new ChoiceDialog("Fluid", "Fluid", "Show");
+        choiceDialog.setTitle("Game Mode");
+        choiceDialog.setHeaderText("Please select game mode");
+        final Optional<String> opt = choiceDialog.showAndWait();
+        AbstractModeController controller = null;
+        try {
+            String rtn = opt.get();
+            switch (rtn) {
+                case "Fluid": {
+                    controller = new FluidModeController();
+                    break;
+                }
+                case "Show": {
+                    controller = new ShowModeController();
+                    break;
+                }
+            }
+        } catch (final NoSuchElementException ex) {
+            final Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.showAndWait();
+        }
+        return controller;
     }
 }

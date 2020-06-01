@@ -16,6 +16,8 @@
  */
 package com.david.midimug;
 
+import com.david.midimug.gamemode.AbstractModeController;
+import com.david.midimug.handler.GameModeUtils;
 import com.david.midimug.handler.MidiUtils;
 import com.david.midimug.handler.Sheet;
 import com.david.midimug.render.KeyboardRenderer;
@@ -35,6 +37,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
 import javafx.scene.layout.Pane;
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 
 /**
  * FXML Controller class
@@ -66,10 +69,12 @@ public class PrimaryController implements Initializable {
     private void openFile() {
         try {
             File source = LoadFileRenderer.renderMidiChooser();
+            AbstractModeController controller = LoadFileRenderer.renderModeChooser();
+            GameModeUtils.setGameMode(controller);
             Sheet music_sheet = MidiUtils.getSheet(source);
             Timeline timeline = SheetRenderer.renderBarSheet(sheet, music_sheet);
             timeline.play();
-        } catch (InvalidMidiDataException | IOException ex) {
+        } catch (InvalidMidiDataException | IOException | MidiUnavailableException ex) {
             final Alert alert = new Alert(AlertType.ERROR);
             alert.setContentText(ex.getLocalizedMessage());
             alert.showAndWait();
