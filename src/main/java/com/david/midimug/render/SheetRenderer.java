@@ -16,6 +16,7 @@
  */
 package com.david.midimug.render;
 
+import com.david.midimug.handler.Channel;
 import com.david.midimug.handler.Note;
 import com.david.midimug.handler.Sheet;
 import javafx.animation.KeyFrame;
@@ -33,6 +34,7 @@ import javafx.util.Duration;
 public class SheetRenderer {
 
     private static final long TIME_PAD = 16;
+    private static final double HUE_SHIFT = -85;
     private static long tempo = 120;
 
     public static Timeline renderBarSheet(Pane target, Sheet sheet) {
@@ -43,35 +45,41 @@ public class SheetRenderer {
         clip.setWidth(target.getWidth());
         clip.setHeight(target.getHeight());
         target.setClip(clip);
+        Color color = Color.DODGERBLUE;
 
         Timeline timeline = new Timeline();
 
-        for (Note i : sheet.getNotes()) {
-            Rectangle bar = new Rectangle();
-            bar.setFill(Color.DODGERBLUE);
+        for (Channel channel : sheet.getChannels()) {
+            for (Note i : channel.getNotes()) {
+                System.out.println(i.toString());
+                Rectangle bar = new Rectangle();
+                bar.setFill(color);
 
-            bar.setWidth(KeyboardRenderer.getPianoWhiteKeyWidth());
-            bar.setHeight(computeTick(i.getLength(), sheet) / 10);
-            bar.setArcHeight(10);
-            bar.setArcWidth(bar.getWidth() / 3);
-            bar.setLayoutX(KeyboardRenderer.getPianoKeyPositionX(i.getKey()));
-            bar.setLayoutY(-bar.getHeight());
+                bar.setWidth(KeyboardRenderer.getPianoWhiteKeyWidth());
+                bar.setHeight(computeTick(i.getLength(), sheet) / 10);
+                bar.setArcHeight(10);
+                bar.setArcWidth(bar.getWidth() / 3);
+                bar.setLayoutX(KeyboardRenderer.getPianoKeyPositionX(i.getKey()));
+                bar.setLayoutY(-bar.getHeight());
 
-            long start_time = computeTick(i.getTimeStamp(), sheet) - Math.round(target.getHeight() * computeTick(i.getLength(), sheet) / bar.getHeight());
-            long end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet);
+                long start_time = computeTick(i.getTimeStamp(), sheet) - Math.round(target.getHeight() * computeTick(i.getLength(), sheet) / bar.getHeight());
+                long end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet);
 
-            KeyFrame start = new KeyFrame(
-                    Duration.millis(start_time + TIME_PAD * target.getHeight()),
-                    new KeyValue(bar.layoutYProperty(), -bar.getHeight())
-            );
-            KeyFrame end = new KeyFrame(
-                    Duration.millis(end_time + TIME_PAD * target.getHeight()),
-                    new KeyValue(bar.layoutYProperty(), target.getHeight())
-            );
+                KeyFrame start = new KeyFrame(
+                        Duration.millis(start_time + TIME_PAD * target.getHeight()),
+                        new KeyValue(bar.layoutYProperty(), -bar.getHeight())
+                );
+                KeyFrame end = new KeyFrame(
+                        Duration.millis(end_time + TIME_PAD * target.getHeight()),
+                        new KeyValue(bar.layoutYProperty(), target.getHeight())
+                );
 
-            timeline.getKeyFrames().addAll(start, end);
+                timeline.getKeyFrames().addAll(start, end);
 
-            target.getChildren().add(bar);
+                target.getChildren().add(bar);
+            }
+
+            color = color.deriveColor(HUE_SHIFT, 1, 1, 1);
         }
 
         return timeline;

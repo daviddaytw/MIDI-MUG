@@ -16,34 +16,22 @@
  */
 package com.david.midimug.handler;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author david
  */
-public class Sheet {
+public class Channel {
 
-    private final int resolution;
-    private final Channel[] channels;
-    private final long length;
+    private Note[] notes;
 
-    Sheet(Channel[] channels, int resolution, long length) {
-        this.channels = channels;
-        this.resolution = resolution;
-        if (resolution == -1) {
-            System.err.println("Bad resolution!");
-        }
-        this.length = length;
+    Channel(ArrayList<Note> noteList) {
+        notes = new Note[noteList.size()];
+        notes = noteList.toArray(notes);
     }
 
-    public int getResolution() {
-        return resolution;
-    }
-
-    public Channel[] getChannels() {
-        return channels;
-    }
-
-    public long getLength() {
-        return length;
+    public Note[] getNotes() {
+        return notes;
     }
 }

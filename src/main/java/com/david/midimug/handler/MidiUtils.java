@@ -38,14 +38,15 @@ public class MidiUtils {
     private static final int NOTE_OFF = 0x80;
     private static final int EMPTY = -1;
 
-    public static ArrayList<Note> getNoteList(Sequence sequence) {
+    public static Channel[] getChannels(Sequence sequence) {
+        Channel[] channels = new Channel[sequence.getTracks().length];
         ArrayList<Note> noteList = new ArrayList<>();
 
         int trackNumber = 0;
         for (Track track : sequence.getTracks()) {
-            trackNumber++;
             System.out.println("Track " + trackNumber + ": size = " + track.size());
 
+            noteList.clear();
             long[] buffer = new long[200];
             Arrays.fill(buffer, -1);
 
@@ -96,9 +97,12 @@ public class MidiUtils {
                     System.out.println(message);
                 }
             }
+
+            channels[trackNumber] = new Channel(noteList);
+            trackNumber++;
         }
 
-        return noteList;
+        return channels;
     }
 
     public static Sheet getSheet(File source) throws InvalidMidiDataException, IOException {
@@ -114,8 +118,8 @@ public class MidiUtils {
             System.err.println(divisionType);
             resolution = -1;
         }
-        ArrayList noteList = getNoteList(sequence);
+        Channel[] channels = getChannels(sequence);
 
-        return new Sheet(noteList, resolution, length);
+        return new Sheet(channels, resolution, length);
     }
 }
