@@ -54,6 +54,10 @@ public class Note {
         return length;
     }
 
+    public boolean isBlackKey() {
+        return (key - 1) % 12 == 0 || (key - 3) % 12 == 0 || (key - 6) % 12 == 0 || (key - 8) % 12 == 0 || (key - 10) % 12 == 0;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

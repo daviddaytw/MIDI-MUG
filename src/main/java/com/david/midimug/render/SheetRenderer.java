@@ -46,7 +46,7 @@ public class SheetRenderer {
         clip.setWidth(target.getWidth());
         clip.setHeight(target.getHeight());
         target.setClip(clip);
-        Color color = Color.DODGERBLUE;
+        Color white_key_color = Color.DODGERBLUE;
 
         final double real_pad = TIME_PAD * target.getHeight();
 
@@ -54,11 +54,17 @@ public class SheetRenderer {
         AbstractModeController controller = GameModeUtils.getGameMode();
 
         for (Channel channel : sheet.getChannels()) {
+            Color black_key_color = white_key_color.deriveColor(0, 1, 0.5, 1);
             for (Note i : channel.getNotes()) {
                 Rectangle bar = new Rectangle();
-                bar.setFill(color);
+                if (i.isBlackKey()) {
+                    bar.setFill(black_key_color);
+                    bar.setWidth(KeyboardRenderer.getPianoBlackKeyWidth());
+                } else {
+                    bar.setFill(white_key_color);
+                    bar.setWidth(KeyboardRenderer.getPianoWhiteKeyWidth());
+                }
 
-                bar.setWidth(KeyboardRenderer.getPianoWhiteKeyWidth());
                 bar.setHeight(computeTick(i.getLength(), sheet) / 10);
                 bar.setArcHeight(10);
                 bar.setArcWidth(bar.getWidth() / 3);
@@ -78,7 +84,7 @@ public class SheetRenderer {
                 target.getChildren().add(bar);
             }
 
-            color = color.deriveColor(HUE_SHIFT, 1, 1, 1);
+            white_key_color = white_key_color.deriveColor(HUE_SHIFT, 1, 1, 1);
         }
 
         return timeline;
