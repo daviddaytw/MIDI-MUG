@@ -16,12 +16,17 @@
  */
 package com.david.midimug.render;
 
+import com.david.midimug.handler.GameModeUtils;
 import com.david.midimug.handler.MidiDevices;
 import com.david.midimug.handler.MidiInstruments;
+import java.util.ArrayList;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javax.sound.midi.Instrument;
+import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;
 
 /**
@@ -32,13 +37,15 @@ public class MenuRenderer {
 
     public static void renderInstrumentsMenu(Menu target) {
         try {
-            int defaultId = MidiInstruments.DEFAULT_INSTRUMENT;
-            String[] instruments = MidiInstruments.getInstrumentsName();
-            for (int i = 0; i < instruments.length; i++) {
-                RadioMenuItem item = new RadioMenuItem(instruments[i]);
-                if (i == defaultId) {
-                    item.setSelected(true);
+            Instrument[] instruments = MidiInstruments.getInstruments();
+            for (final Instrument i : instruments) {
+                RadioMenuItem item = new RadioMenuItem(i.getName());
+                if (i.equals(MidiInstruments.getDefaultInstrument())) {
+                    MidiInstruments.selectInstrument(i);
                 }
+                item.setOnAction((ActionEvent t) -> {
+                    MidiInstruments.selectInstrument(i);
+                });
                 target.getItems().add(item);
             }
         } catch (MidiUnavailableException ex) {
@@ -49,10 +56,20 @@ public class MenuRenderer {
     public static void renderDevicesMenu(Menu target) {
         ObservableList<MenuItem> nodeList = target.getItems();
         nodeList.remove(2, nodeList.size());
-        String[] devices = MidiDevices.getDevicesName();
-        for (String i : devices) {
-            RadioMenuItem item = new RadioMenuItem(i);
+        final ArrayList<MidiDevice> devices = MidiDevices.getDevices();
+        devices.stream().map((MidiDevice device) -> {
+            RadioMenuItem item = new RadioMenuItem(device.getDeviceInfo().getName());
+            item.setOnAction((ActionEvent t) -> {
+                try {
+                    MidiDevices.selectDevice(device);
+                    MidiDevices.setGameController(GameModeUtils.getGameMode());
+                } catch (MidiUnavailableException ex) {
+                    ex.printStackTrace();
+                }
+            });
+            return item;
+        }).forEachOrdered((item) -> {
             nodeList.add(item);
-        }
+        });
     }
 }

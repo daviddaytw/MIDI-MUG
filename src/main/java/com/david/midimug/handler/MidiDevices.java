@@ -16,12 +16,14 @@
  */
 package com.david.midimug.handler;
 
+import com.david.midimug.gamemode.AbstractModeController;
 import java.util.ArrayList;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
+import javax.sound.midi.Transmitter;
 
 /**
  *
@@ -29,10 +31,10 @@ import javax.sound.midi.Synthesizer;
  */
 public class MidiDevices {
 
-    private static MidiDevice[] devicesList;
+    private static MidiDevice selected = null;
 
-    public static MidiDevice[] getDevices() {
-        ArrayList<MidiDevice> devices = new ArrayList<MidiDevice>();
+    public static ArrayList<MidiDevice> getDevices() {
+        ArrayList<MidiDevice> devicesList = new ArrayList<>();
         MidiDevice.Info[] infos = MidiSystem.getMidiDeviceInfo();
 
         for (MidiDevice.Info i : infos) {
@@ -41,24 +43,34 @@ public class MidiDevices {
 
                 // specify hardware MIDI port
                 if (!(device instanceof Sequencer) && !(device instanceof Synthesizer)) {
-                    devices.add(device);
+                    devicesList.add(device);
                 }
             } catch (MidiUnavailableException ex) {
                 ex.printStackTrace();
             }
         }
 
-        devicesList = new MidiDevice[devices.size()];
-        devicesList = devices.toArray(devicesList);
         return devicesList;
     }
 
-    public static String[] getDevicesName() {
-        MidiDevice[] list = getDevices();
-        String[] deviceName = new String[list.length];
-        for (int i = 0; i < list.length; i++) {
-            deviceName[i] = list[i].getDeviceInfo().getName();
+    public static void selectDevice(MidiDevice device) throws MidiUnavailableException {
+        selected = device;
+        if (selected.isOpen()) {
+            selected.close();
         }
-        return deviceName;
+        selected.open();
+    }
+
+    public static void setGameController(AbstractModeController controller) throws MidiUnavailableException {
+        if (selected == null) {
+            System.err.println("No device selected!");
+            return;
+        }
+        Transmitter trans = selected.getTransmitter();
+        trans.setReceiver(controller);
+    }
+
+    public static void closeDevice() {
+        selected.close();
     }
 }

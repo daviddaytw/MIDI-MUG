@@ -16,11 +16,12 @@
  */
 package com.david.midimug.render;
 
+import com.david.midimug.gamemode.AbstractModeController;
 import com.david.midimug.handler.Channel;
+import com.david.midimug.handler.GameModeUtils;
 import com.david.midimug.handler.Note;
 import com.david.midimug.handler.Sheet;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -47,11 +48,13 @@ public class SheetRenderer {
         target.setClip(clip);
         Color color = Color.DODGERBLUE;
 
+        final double real_pad = TIME_PAD * target.getHeight();
+
         Timeline timeline = new Timeline();
+        AbstractModeController controller = GameModeUtils.getGameMode();
 
         for (Channel channel : sheet.getChannels()) {
             for (Note i : channel.getNotes()) {
-                System.out.println(i.toString());
                 Rectangle bar = new Rectangle();
                 bar.setFill(color);
 
@@ -62,19 +65,15 @@ public class SheetRenderer {
                 bar.setLayoutX(KeyboardRenderer.getPianoKeyPositionX(i.getKey()));
                 bar.setLayoutY(-bar.getHeight());
 
-                long start_time = computeTick(i.getTimeStamp(), sheet) - Math.round(target.getHeight() * computeTick(i.getLength(), sheet) / bar.getHeight());
+                long start_time = computeTick(i.getTimeStamp(), sheet);
+                long show_time = start_time - Math.round(target.getHeight() * computeTick(i.getLength(), sheet) / bar.getHeight());
                 long end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet);
 
-                KeyFrame start = new KeyFrame(
-                        Duration.millis(start_time + TIME_PAD * target.getHeight()),
-                        new KeyValue(bar.layoutYProperty(), -bar.getHeight())
-                );
-                KeyFrame end = new KeyFrame(
-                        Duration.millis(end_time + TIME_PAD * target.getHeight()),
-                        new KeyValue(bar.layoutYProperty(), target.getHeight())
-                );
+                KeyFrame show = controller.onNoteShow(Duration.millis(show_time + real_pad), target, bar, i);
+                KeyFrame start = controller.onNoteStart(Duration.millis(start_time + real_pad), target, bar, i);
+                KeyFrame end = controller.onNoteEnd(Duration.millis(end_time + real_pad), target, bar, i);
 
-                timeline.getKeyFrames().addAll(start, end);
+                timeline.getKeyFrames().addAll(show, start, end);
 
                 target.getChildren().add(bar);
             }
@@ -85,7 +84,7 @@ public class SheetRenderer {
         return timeline;
     }
 
-    private static long computeTick(long tick, Sheet sheet) {
+    public static long computeTick(long tick, Sheet sheet) {
         return tick * 60000 / sheet.getResolution() / tempo;
     }
 }

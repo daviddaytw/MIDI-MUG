@@ -17,6 +17,7 @@
 package com.david.midimug.handler;
 
 import javax.sound.midi.Instrument;
+import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
@@ -28,29 +29,34 @@ import javax.sound.midi.Synthesizer;
 public class MidiInstruments {
 
     public final static int DEFAULT_INSTRUMENT = 0;
+    private static Synthesizer synthesizer = null;
+    private static MidiChannel channel = null;
 
     public static Instrument[] getInstruments() throws MidiUnavailableException {
-        Synthesizer synthesizer = MidiSystem.getSynthesizer();
-        synthesizer.open();
-        Instrument[] orchestra = synthesizer.getAvailableInstruments();
-        synthesizer.close();
-        return orchestra;
-    }
-
-    public static String[] getInstrumentsName() throws MidiUnavailableException {
-        Instrument[] orchestra = getInstruments();
-        String[] nameList = new String[orchestra.length];
-        for (int i = 0; i < orchestra.length; i++) {
-            nameList[i] = orchestra[i].getName();
+        synthesizer = MidiSystem.getSynthesizer();
+        if (!synthesizer.isOpen()) {
+            synthesizer.open();
         }
-        return nameList;
+        Instrument[] orchestra = synthesizer.getAvailableInstruments();
+        MidiChannel[] mChannels = synthesizer.getChannels();
+        channel = mChannels[0];
+        return orchestra;
     }
 
     public static Instrument getDefaultInstrument() throws MidiUnavailableException {
         return getInstruments()[DEFAULT_INSTRUMENT];
     }
 
-    public static String getDefaultInstrumentName() throws MidiUnavailableException {
-        return getDefaultInstrument().getName();
+    public static void selectInstrument(Instrument select) {
+        synthesizer.loadInstrument(select);
+        channel.programChange(select.getPatch().getProgram());
+    }
+
+    public static void noteOn(int key) {
+        channel.noteOn(key, 100);
+    }
+
+    public static void noteOff(int key) {
+        channel.noteOff(key, 100);
     }
 }

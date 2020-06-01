@@ -18,7 +18,7 @@ package com.david.midimug.render;
 
 import java.util.HashMap;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 
@@ -30,7 +30,7 @@ public class KeyboardRenderer {
 
     private final static int WHITE_KEY_COUNT = 52;
     private final static int BLACK_KEY_COUNT = 36;
-    private final static HashMap<Integer, Button> piano_keys = new HashMap<>();
+    private final static HashMap<Integer, ToggleButton> piano_keys = new HashMap<>();
 
     public static void renderPianoKeys(Pane target) {
         ObservableList nodeList = target.getChildren();
@@ -40,7 +40,7 @@ public class KeyboardRenderer {
         final double whiteKeyHeight = target.getPrefHeight();
         final double whiteKeyWidth = getPianoWhiteKeyWidth();
         for (int i = 0; i < WHITE_KEY_COUNT; i++) {
-            Button key = new Button();
+            ToggleButton key = new ToggleButton();
             key.setPrefWidth(whiteKeyWidth);
             key.setPrefHeight(whiteKeyHeight);
             key.setLayoutX(i * whiteKeyWidth);
@@ -53,7 +53,7 @@ public class KeyboardRenderer {
         final double blackKeyHeight = whiteKeyHeight * 0.6;
         final double blackKeyWidth = getPianoBlackKeyWidth();
         for (int i = 0; i < BLACK_KEY_COUNT; i++) {
-            Button key = new Button();
+            ToggleButton key = new ToggleButton();
             key.setStyle("-fx-background-color: #000000;");
             key.setPrefWidth(blackKeyWidth);
             key.setPrefHeight(blackKeyHeight);
@@ -77,5 +77,13 @@ public class KeyboardRenderer {
 
     public static double getPianoKeyPositionX(int key) {
         return piano_keys.get(key).getLayoutX();
+    }
+
+    public static void pressKey(int key) {
+        piano_keys.get(key).setSelected(true);
+    }
+
+    public static void releaseKey(int key) {
+        piano_keys.get(key).setSelected(false);
     }
 }

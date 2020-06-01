@@ -16,6 +16,7 @@
  */
 package com.david.midimug;
 
+import com.david.midimug.handler.MidiDevices;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +40,11 @@ public class App extends Application {
         stage.setMaximized(true);
         stage.show();
         this.stage = stage;
+    }
+
+    @Override
+    public void stop() {
+        MidiDevices.closeDevice();
     }
 
     public static Stage getAppStage() {
