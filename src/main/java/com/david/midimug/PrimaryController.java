@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Menu;
@@ -69,5 +70,15 @@ public class PrimaryController implements Initializable {
         } catch (InvalidMidiDataException | IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @FXML
+    private void refreshDevices() {
+        MenuRenderer.renderDevicesMenu(devicesMenu);
+    }
+
+    @FXML
+    private void exit() {
+        Platform.exit();
     }
 }

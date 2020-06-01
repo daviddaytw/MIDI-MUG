@@ -14,13 +14,13 @@
                 <Menu mnemonicParsing="false" text="File">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open..." />
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
                     </items>
                 </Menu>
                 <Menu fx:id="instrumentsMenu" mnemonicParsing="false" text="Insturments" />
                 <Menu fx:id="devicesMenu" mnemonicParsing="false" text="Devices">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Refresh" />
+                        <MenuItem mnemonicParsing="false" onAction="#refreshDevices" text="Refresh" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                     </items>
                 </Menu>
