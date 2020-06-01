@@ -21,7 +21,6 @@ import com.david.midimug.handler.Note;
 import com.david.midimug.render.KeyboardRenderer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
-import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -30,7 +29,7 @@ import javafx.util.Duration;
  *
  * @author david
  */
-public class FluidModeController extends AbstractModeController {
+public class RealModeController extends AbstractModeController {
 
     @Override
     public KeyFrame onNoteShow(Duration time, Pane pane, Rectangle bar, Note note) {
@@ -41,27 +40,25 @@ public class FluidModeController extends AbstractModeController {
     @Override
     public KeyFrame onNoteStart(Duration time, Pane pane, Rectangle bar, Note note) {
         KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight() - bar.getHeight());
-        return new KeyFrame(time, (ActionEvent t) -> {
-            MidiInstruments.noteOn(note.getKey());
-        }, barY);
+        return new KeyFrame(time, barY);
     }
 
     @Override
     public KeyFrame onNoteEnd(Duration time, Pane pane, Rectangle bar, Note note) {
         KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight());
-        return new KeyFrame(time, (ActionEvent t) -> {
-            MidiInstruments.noteOff(note.getKey());
-        }, barY);
+        return new KeyFrame(time, barY);
     }
 
     @Override
     public void onUserPress(int key) {
         KeyboardRenderer.pressKey(key);
+        MidiInstruments.noteOn(key);
     }
 
     @Override
     public void onUserRelease(int key) {
         KeyboardRenderer.releaseKey(key);
+        MidiInstruments.noteOff(key);
     }
 
     @Override

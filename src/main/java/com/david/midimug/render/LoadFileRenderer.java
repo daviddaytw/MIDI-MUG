@@ -19,6 +19,7 @@ package com.david.midimug.render;
 import com.david.midimug.App;
 import com.david.midimug.gamemode.AbstractModeController;
 import com.david.midimug.gamemode.FluidModeController;
+import com.david.midimug.gamemode.RealModeController;
 import com.david.midimug.gamemode.ShowModeController;
 import java.io.File;
 import java.util.NoSuchElementException;
@@ -44,7 +45,7 @@ public class LoadFileRenderer {
 
     public static AbstractModeController renderModeChooser() {
 
-        final ChoiceDialog<String> choiceDialog = new ChoiceDialog("Fluid", "Fluid", "Show");
+        final ChoiceDialog<String> choiceDialog = new ChoiceDialog("Fluid", "Fluid", "Show", "Real");
         choiceDialog.setTitle("Game Mode");
         choiceDialog.setHeaderText("Please select game mode");
         final Optional<String> opt = choiceDialog.showAndWait();
@@ -58,6 +59,10 @@ public class LoadFileRenderer {
                 }
                 case "Show": {
                     controller = new ShowModeController();
+                    break;
+                }
+                case "Real": {
+                    controller = new RealModeController();
                     break;
                 }
             }
