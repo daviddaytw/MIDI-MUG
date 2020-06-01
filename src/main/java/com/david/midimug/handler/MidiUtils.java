@@ -19,7 +19,7 @@ package com.david.midimug.handler;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiMessage;
@@ -36,15 +36,18 @@ public class MidiUtils {
 
     private static final int NOTE_ON = 0x90;
     private static final int NOTE_OFF = 0x80;
+    private static final int EMPTY = -1;
 
     public static ArrayList<Note> getNoteList(Sequence sequence) {
         ArrayList<Note> noteList = new ArrayList<>();
-        HashMap<Integer, Long> buffer = new HashMap<>();
 
         int trackNumber = 0;
         for (Track track : sequence.getTracks()) {
             trackNumber++;
             System.out.println("Track " + trackNumber + ": size = " + track.size());
+
+            long[] buffer = new long[200];
+            Arrays.fill(buffer, -1);
 
             for (int i = 0; i < track.size(); i++) {
                 MidiEvent event = track.get(i);
@@ -55,21 +58,27 @@ public class MidiUtils {
                 if (message instanceof ShortMessage) {
                     ShortMessage sm = (ShortMessage) message;
 
+                    int command = sm.getCommand();
                     int key = sm.getData1();
+                    int velocity = sm.getData2();
 
-                    switch (sm.getCommand()) {
+                    if (velocity == 0) {
+                        command = NOTE_OFF;
+                    }
+
+                    switch (command) {
                         case NOTE_ON: {
-                            if (!buffer.containsKey(key)) {
-                                buffer.put(key, tick);
+                            if (buffer[key] == EMPTY) {
+                                buffer[key] = tick;
                             } else {
                                 System.err.println("Invalid MIDI File! Note is already on.");
                             }
                             break;
                         }
                         case NOTE_OFF: {
-                            if (buffer.containsKey(key)) {
-                                long timestamp = buffer.get(key);
-                                buffer.remove(key);
+                            if (buffer[key] != EMPTY) {
+                                long timestamp = buffer[key];
+                                buffer[key] = EMPTY;
                                 Note note = new Note(key, timestamp, tick - timestamp);
                                 noteList.add(note);
                             } else {
