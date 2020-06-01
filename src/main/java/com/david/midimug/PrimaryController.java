@@ -16,7 +16,7 @@
  */
 package com.david.midimug;
 
-import com.david.midimug.handler.MidiProcessor;
+import com.david.midimug.handler.MidiUtils;
 import com.david.midimug.handler.Sheet;
 import com.david.midimug.render.KeyboardRenderer;
 import com.david.midimug.render.LoadFileRenderer;
@@ -63,7 +63,7 @@ public class PrimaryController implements Initializable {
     private void openFile() {
         try {
             File source = LoadFileRenderer.renderMidiChooser();
-            Sheet music_sheet = MidiProcessor.getSheet(source);
+            Sheet music_sheet = MidiUtils.getSheet(source);
             Timeline timeline = SheetRenderer.renderBarSheet(sheet, music_sheet);
             timeline.play();
         } catch (InvalidMidiDataException | IOException ex) {

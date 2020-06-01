@@ -32,7 +32,7 @@ import javax.sound.midi.Track;
  *
  * @author david
  */
-public class MidiProcessor {
+public class MidiUtils {
 
     private static final int NOTE_ON = 0x90;
     private static final int NOTE_OFF = 0x80;
