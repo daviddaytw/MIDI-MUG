@@ -21,11 +21,15 @@ import com.david.midimug.handler.Channel;
 import com.david.midimug.handler.GameModeUtils;
 import com.david.midimug.handler.Note;
 import com.david.midimug.handler.Sheet;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
@@ -38,9 +42,14 @@ public class SheetRenderer {
     private static final double HUE_SHIFT = -85;
     private static long tempo = 120;
 
+    private static final Text combo = new Text();
+    private static final Font COMBO_FONT = new Font(64);
+    private static Timer timer = new Timer();
+
     public static Timeline renderBarSheet(Pane target, Sheet sheet) {
         // reset sheet
         target.getChildren().clear();
+        target.getChildren().add(combo);
 
         Rectangle clip = new Rectangle();
         clip.setWidth(target.getWidth());
@@ -90,7 +99,30 @@ public class SheetRenderer {
         return timeline;
     }
 
-    public static long computeTick(long tick, Sheet sheet) {
+    private static long computeTick(long tick, Sheet sheet) {
         return tick * 60000 / sheet.getResolution() / tempo;
+    }
+
+    public static void renderCombo(Pane target, String text, Color color) {
+        combo.setText(text);
+        combo.setFont(COMBO_FONT);
+        combo.setFill(color);
+
+        double x = (target.getWidth() - combo.getLayoutBounds().getWidth()) / 2;
+        double y = (target.getHeight() - combo.getLayoutBounds().getHeight()) / 2;
+        combo.setLayoutX(x);
+        combo.setLayoutY(y);
+        combo.setVisible(true);
+
+        TimerTask end = new TimerTask() {
+            @Override
+            public void run() {
+                combo.setVisible(false);
+            }
+
+        };
+        timer.cancel();
+        timer = new Timer();
+        timer.schedule(end, 500);
     }
 }
