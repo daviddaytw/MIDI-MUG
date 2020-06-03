@@ -38,7 +38,6 @@ import javafx.util.Duration;
  */
 public class SheetRenderer {
 
-    private static final long TIME_PAD = 16;
     private static final double HUE_SHIFT = -85;
     private static long tempo = 120;
 
@@ -61,8 +60,6 @@ public class SheetRenderer {
         target.setClip(clip);
         Color white_key_color = Color.DODGERBLUE;
 
-        final double real_pad = TIME_PAD * target.getHeight();
-
         Timeline timeline = new Timeline();
         AbstractModeController controller = GameModeUtils.getGameMode();
 
@@ -84,13 +81,14 @@ public class SheetRenderer {
                 bar.setLayoutX(KeyboardRenderer.getPianoKeyPositionX(i.getKey()));
                 bar.setLayoutY(-bar.getHeight());
 
-                double start_time = computeTick(i.getTimeStamp(), sheet);
-                double show_time = Math.max(0, start_time - target.getHeight() / bar.getHeight() * computeTick(i.getLength(), sheet));
-                double end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet);
+                double shift = target.getHeight() / bar.getHeight() * computeTick(i.getLength(), sheet);
+                double show_time = computeTick(i.getTimeStamp(), sheet);
+                double start_time = show_time + shift;
+                double end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet) + shift;
 
-                KeyFrame show = controller.onNoteShow(Duration.millis(show_time + real_pad), target, bar, i);
-                KeyFrame start = controller.onNoteStart(Duration.millis(start_time + real_pad), target, bar, i);
-                KeyFrame end = controller.onNoteEnd(Duration.millis(end_time + real_pad), target, bar, i);
+                KeyFrame show = controller.onNoteShow(Duration.millis(show_time), target, bar, i);
+                KeyFrame start = controller.onNoteStart(Duration.millis(start_time), target, bar, i);
+                KeyFrame end = controller.onNoteEnd(Duration.millis(end_time), target, bar, i);
 
                 timeline.getKeyFrames().addAll(show, start, end);
 
