@@ -84,9 +84,9 @@ public class SheetRenderer {
                 bar.setLayoutX(KeyboardRenderer.getPianoKeyPositionX(i.getKey()));
                 bar.setLayoutY(-bar.getHeight());
 
-                long start_time = computeTick(i.getTimeStamp(), sheet);
-                long show_time = start_time - Math.round(target.getHeight() * computeTick(i.getLength(), sheet) / bar.getHeight());
-                long end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet);
+                double start_time = computeTick(i.getTimeStamp(), sheet);
+                double show_time = Math.max(0, start_time - target.getHeight() / bar.getHeight() * computeTick(i.getLength(), sheet));
+                double end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet);
 
                 KeyFrame show = controller.onNoteShow(Duration.millis(show_time + real_pad), target, bar, i);
                 KeyFrame start = controller.onNoteStart(Duration.millis(start_time + real_pad), target, bar, i);
@@ -103,8 +103,8 @@ public class SheetRenderer {
         return timeline;
     }
 
-    private static long computeTick(long tick, Sheet sheet) {
-        return tick * 60000 / sheet.getResolution() / tempo;
+    private static double computeTick(long tick, Sheet sheet) {
+        return tick * 60000.0 / sheet.getResolution() / tempo;
     }
 
     public static void renderCombo(String text, Color color) {
