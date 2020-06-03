@@ -85,5 +85,6 @@ public class PrimaryController implements Initializable {
     @FXML
     private void exit() {
         Platform.exit();
+        System.exit(0);
     }
 }
