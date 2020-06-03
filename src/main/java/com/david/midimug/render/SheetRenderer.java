@@ -46,7 +46,11 @@ public class SheetRenderer {
     private static final Font COMBO_FONT = new Font(64);
     private static Timer timer = new Timer();
 
+    private static Pane target;
+
     public static Timeline renderBarSheet(Pane target, Sheet sheet) {
+        SheetRenderer.target = target;
+
         // reset sheet
         target.getChildren().clear();
         target.getChildren().add(combo);
@@ -103,7 +107,7 @@ public class SheetRenderer {
         return tick * 60000 / sheet.getResolution() / tempo;
     }
 
-    public static void renderCombo(Pane target, String text, Color color) {
+    public static void renderCombo(String text, Color color) {
         combo.setText(text);
         combo.setFont(COMBO_FONT);
         combo.setFill(color);

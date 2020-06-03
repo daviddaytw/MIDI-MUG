@@ -18,11 +18,15 @@ package com.david.midimug.gamemode;
 
 import com.david.midimug.handler.MidiInstruments;
 import com.david.midimug.handler.Note;
+import com.david.midimug.handler.SheetUtils;
 import com.david.midimug.render.KeyboardRenderer;
+import com.david.midimug.render.SheetRenderer;
+import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -31,6 +35,14 @@ import javafx.util.Duration;
  * @author david
  */
 public class FluidModeController extends AbstractModeController {
+
+    private long[] note_status;
+
+    public FluidModeController() {
+        super();
+        note_status = new long[200];
+        Arrays.fill(note_status, -1);
+    }
 
     @Override
     public KeyFrame onNoteShow(Duration time, Pane pane, Rectangle bar, Note note) {
@@ -43,6 +55,7 @@ public class FluidModeController extends AbstractModeController {
         KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight() - bar.getHeight());
         return new KeyFrame(time, (ActionEvent t) -> {
             MidiInstruments.noteOn(note.getKey());
+            note_status[note.getKey()] = Math.round(time.toMillis());
         }, barY);
     }
 
@@ -51,11 +64,19 @@ public class FluidModeController extends AbstractModeController {
         KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight());
         return new KeyFrame(time, (ActionEvent t) -> {
             MidiInstruments.noteOff(note.getKey());
+            note_status[note.getKey()] = -1;
         }, barY);
     }
 
     @Override
     public void onUserPress(int key) {
+        if (note_status[key] != -1) {
+            note_status[key] = -1;
+
+            long currentMillis = Math.round(SheetUtils.getCurrentTime().toMillis());
+            long score = Math.max(0, 1000 - currentMillis - note_status[key]);
+            SheetRenderer.renderCombo(Long.toString(score), Color.CORAL);
+        }
         KeyboardRenderer.pressKey(key);
     }
 

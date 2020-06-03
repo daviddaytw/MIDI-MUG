@@ -18,17 +18,14 @@ package com.david.midimug;
 
 import com.david.midimug.gamemode.AbstractModeController;
 import com.david.midimug.handler.GameModeUtils;
-import com.david.midimug.handler.MidiUtils;
-import com.david.midimug.handler.Sheet;
+import com.david.midimug.handler.SheetUtils;
 import com.david.midimug.render.KeyboardRenderer;
 import com.david.midimug.render.LoadFileRenderer;
 import com.david.midimug.render.MenuRenderer;
-import com.david.midimug.render.SheetRenderer;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -71,9 +68,8 @@ public class PrimaryController implements Initializable {
             File source = LoadFileRenderer.renderMidiChooser();
             AbstractModeController controller = LoadFileRenderer.renderModeChooser();
             GameModeUtils.setGameMode(controller);
-            Sheet music_sheet = MidiUtils.getSheet(source);
-            Timeline timeline = SheetRenderer.renderBarSheet(sheet, music_sheet);
-            timeline.play();
+            SheetUtils.setupSheet(sheet, source);
+            SheetUtils.play();
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException ex) {
             final Alert alert = new Alert(AlertType.ERROR);
             alert.setContentText(ex.getLocalizedMessage());
