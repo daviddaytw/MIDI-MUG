@@ -52,7 +52,6 @@ public class SheetRenderer {
 
         // reset sheet
         target.getChildren().clear();
-        target.getChildren().add(combo);
 
         Rectangle clip = new Rectangle();
         clip.setWidth(target.getWidth());
@@ -97,6 +96,8 @@ public class SheetRenderer {
 
             white_key_color = white_key_color.deriveColor(HUE_SHIFT, 1, 1, 1);
         }
+
+        target.getChildren().add(combo);
 
         return timeline;
     }

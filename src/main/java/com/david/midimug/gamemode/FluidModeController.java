@@ -71,11 +71,11 @@ public class FluidModeController extends AbstractModeController {
     @Override
     public void onUserPress(int key) {
         if (note_status[key] != -1) {
-            note_status[key] = -1;
-
             long currentMillis = Math.round(SheetUtils.getCurrentTime().toMillis());
-            long score = Math.max(0, 1000 - currentMillis - note_status[key]);
+            long score = Math.max(0, 1000 - (currentMillis - note_status[key]));
             SheetRenderer.renderCombo(Long.toString(score), Color.CORAL);
+
+            note_status[key] = -1;
         }
         KeyboardRenderer.pressKey(key);
     }
