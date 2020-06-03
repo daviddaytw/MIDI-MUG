@@ -24,11 +24,6 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                    </items>
-                </Menu>
             </menus>
         </MenuBar>
         <Pane fx:id="sheet" style="-fx-background-color: #121212;" VBox.vgrow="ALWAYS" />
