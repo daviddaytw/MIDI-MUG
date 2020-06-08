@@ -14,7 +14,11 @@ This simple instruction will set you ready to play in a few minutes!
 
 ### Installation
 
-Just go to [Release Page](https://github.com/dj6082013/MIDI-MUG/releases/) and download the latest stable version!
+**No need to install!**
+
+Just go to [Release Page](https://github.com/dj6082013/MIDI-MUG/releases/) and download the latest stable version.
+
+Extract the zip fie, go to `bin` folder, and execute `MIDI_MUG`!
 
 ### Play
 
