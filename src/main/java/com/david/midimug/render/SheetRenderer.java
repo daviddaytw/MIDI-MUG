@@ -23,14 +23,12 @@ import com.david.midimug.handler.Note;
 import com.david.midimug.handler.Sheet;
 import java.util.Timer;
 import java.util.TimerTask;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 /**
  *
@@ -84,11 +82,15 @@ public class SheetRenderer {
                 double start_time = show_time + shift;
                 double end_time = computeTick(i.getTimeStamp() + i.getLength(), sheet) + shift;
 
-                KeyFrame show = controller.onNoteShow(Duration.millis(show_time), target, bar, i);
-                KeyFrame start = controller.onNoteStart(Duration.millis(start_time), target, bar, i);
-                KeyFrame end = controller.onNoteEnd(Duration.millis(end_time), target, bar, i);
-
-                timeline.getKeyFrames().addAll(show, start, end);
+                controller.setupNote(
+                        target,
+                        bar,
+                        timeline,
+                        i,
+                        show_time,
+                        start_time,
+                        end_time
+                );
 
                 target.getChildren().add(bar);
             }

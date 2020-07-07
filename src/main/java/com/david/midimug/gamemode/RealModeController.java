@@ -24,6 +24,8 @@ import com.david.midimug.render.SheetRenderer;
 import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -36,44 +38,60 @@ import javafx.util.Duration;
  */
 public class RealModeController extends AbstractModeController {
 
-    private long[] note_status;
+    private static final int NOTE_OFF = -1;
+    private static final int NOTE_RANGE = 200;
+
+    private final double[] note_start;
+    private final double[] note_end;
 
     public RealModeController() {
         super();
-        note_status = new long[200];
-        Arrays.fill(note_status, -1);
+        note_start = new double[NOTE_RANGE];
+        note_end = new double[NOTE_RANGE];
+        Arrays.fill(note_start, NOTE_OFF);
     }
 
     @Override
-    public KeyFrame onNoteShow(Duration time, Pane pane, Rectangle bar, Note note) {
-        KeyValue barY = new KeyValue(bar.layoutYProperty(), -bar.getHeight());
-        return new KeyFrame(time, barY);
-    }
+    public void setupNote(Pane pane, Rectangle bar, Timeline timeline, Note note, double show_t, double start_t, double end_t) {
+        Property YProperty = bar.layoutYProperty();
+        double barHeight = bar.getHeight();
+        double paneHeight = pane.getHeight();
+        int key = note.getKey();
 
-    @Override
-    public KeyFrame onNoteStart(Duration time, Pane pane, Rectangle bar, Note note) {
-        KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight() - bar.getHeight());
-        return new KeyFrame(time, (ActionEvent t) -> {
-            note_status[note.getKey()] = Math.round(time.toMillis());
-        }, barY);
-    }
+        KeyFrame show = new KeyFrame(
+                Duration.millis(show_t),
+                new KeyValue(YProperty, -barHeight)
+        );
 
-    @Override
-    public KeyFrame onNoteEnd(Duration time, Pane pane, Rectangle bar, Note note) {
-        KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight());
-        return new KeyFrame(time, (ActionEvent t) -> {
-            note_status[note.getKey()] = -1;
-        }, barY);
+        KeyFrame start = new KeyFrame(
+                Duration.millis(start_t),
+                (ActionEvent t) -> {
+                    note_start[key] = start_t;
+                },
+                new KeyValue(YProperty, paneHeight - barHeight)
+        );
+
+        KeyFrame end = new KeyFrame(
+                Duration.millis(end_t),
+                (ActionEvent t) -> {
+                    note_start[note.getKey()] = NOTE_OFF;
+                },
+                new KeyValue(YProperty, paneHeight)
+        );
+
+        timeline.getKeyFrames().addAll(show, start, end);
     }
 
     @Override
     public void onUserPress(int key) {
-        if (note_status[key] != -1) {
-            long currentMillis = Math.round(SheetUtils.getCurrentTime().toMillis());
-            long score = Math.max(0, 1000 - (currentMillis - note_status[key]));
-            SheetRenderer.renderCombo(Long.toString(score), Color.CORAL);
+        if (note_start[key] != NOTE_OFF) {
+            double currentMillis = SheetUtils.getCurrentTime().toMillis();
+            double length = note_end[key] - note_start[key];
+            double accuracy = length - (currentMillis - note_start[key]);
+            int score = (int) Math.round(1000 * accuracy / length);
+            SheetRenderer.renderCombo(Integer.toString(score), Color.CORAL);
 
-            note_status[key] = -1;
+            note_start[key] = NOTE_OFF;
         }
         KeyboardRenderer.pressKey(key);
         MidiInstruments.noteOn(key);
@@ -89,5 +107,4 @@ public class RealModeController extends AbstractModeController {
     public long getScore() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }

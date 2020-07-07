@@ -17,10 +17,9 @@
 package com.david.midimug.gamemode;
 
 import com.david.midimug.handler.Note;
-import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
@@ -34,11 +33,15 @@ public abstract class AbstractModeController implements Receiver {
     private static final int NOTE_ON = 0x90;
     private static final int NOTE_OFF = 0x80;
 
-    public abstract KeyFrame onNoteShow(Duration time, Pane pane, Rectangle bar, Note note);
-
-    public abstract KeyFrame onNoteStart(Duration time, Pane pane, Rectangle bar, Note note);
-
-    public abstract KeyFrame onNoteEnd(Duration time, Pane pane, Rectangle bar, Note note);
+    public abstract void setupNote(
+            Pane pane,
+            Rectangle bar,
+            Timeline timeline,
+            Note note,
+            double show_t,
+            double start_t,
+            double end_t
+    );
 
     public abstract void onUserPress(int key);
 

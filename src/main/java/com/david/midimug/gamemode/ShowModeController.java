@@ -21,6 +21,8 @@ import com.david.midimug.handler.Note;
 import com.david.midimug.render.KeyboardRenderer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -33,27 +35,36 @@ import javafx.util.Duration;
 public class ShowModeController extends AbstractModeController {
 
     @Override
-    public KeyFrame onNoteShow(Duration time, Pane pane, Rectangle bar, Note note) {
-        KeyValue barY = new KeyValue(bar.layoutYProperty(), -bar.getHeight());
-        return new KeyFrame(time, barY);
-    }
+    public void setupNote(Pane pane, Rectangle bar, Timeline timeline, Note note, double show_t, double start_t, double end_t) {
+        Property YProperty = bar.layoutYProperty();
+        double barHeight = bar.getHeight();
+        double paneHeight = pane.getHeight();
+        int key = note.getKey();
 
-    @Override
-    public KeyFrame onNoteStart(Duration time, Pane pane, Rectangle bar, Note note) {
-        KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight() - bar.getHeight());
-        return new KeyFrame(time, (ActionEvent t) -> {
-            KeyboardRenderer.pressKey(note.getKey());
-            MidiInstruments.noteOn(note.getKey());
-        }, barY);
-    }
+        KeyFrame show = new KeyFrame(
+                Duration.millis(show_t),
+                new KeyValue(YProperty, -barHeight)
+        );
 
-    @Override
-    public KeyFrame onNoteEnd(Duration time, Pane pane, Rectangle bar, Note note) {
-        KeyValue barY = new KeyValue(bar.layoutYProperty(), pane.getHeight());
-        return new KeyFrame(time, (ActionEvent t) -> {
-            KeyboardRenderer.releaseKey(note.getKey());
-            MidiInstruments.noteOff(note.getKey());
-        }, barY);
+        KeyFrame start = new KeyFrame(
+                Duration.millis(start_t),
+                (ActionEvent t) -> {
+                    KeyboardRenderer.pressKey(key);
+                    MidiInstruments.noteOn(key);
+                },
+                new KeyValue(YProperty, paneHeight - barHeight)
+        );
+
+        KeyFrame end = new KeyFrame(
+                Duration.millis(end_t),
+                (ActionEvent t) -> {
+                    MidiInstruments.noteOff(key);
+                    KeyboardRenderer.releaseKey(key);
+                },
+                new KeyValue(YProperty, paneHeight)
+        );
+
+        timeline.getKeyFrames().addAll(show, start, end);
     }
 
     @Override
