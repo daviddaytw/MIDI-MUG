@@ -47,7 +47,7 @@ public class SheetRenderer {
 
     private static Pane target;
 
-    public static Timeline renderBarSheet(Pane target, Sheet sheet) {
+    public static void renderBarSheet(Pane target, Sheet sheet, Timeline timeline) {
         SheetRenderer.target = target;
 
         // reset sheet
@@ -59,7 +59,6 @@ public class SheetRenderer {
         target.setClip(clip);
         Color white_key_color = Color.DODGERBLUE;
 
-        Timeline timeline = new Timeline();
         AbstractModeController controller = GameModeUtils.getGameMode();
 
         for (Channel channel : sheet.getChannels()) {
@@ -98,8 +97,6 @@ public class SheetRenderer {
         }
 
         target.getChildren().add(combo);
-
-        return timeline;
     }
 
     private static double computeTick(long tick, Sheet sheet) {

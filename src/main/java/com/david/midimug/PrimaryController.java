@@ -65,6 +65,7 @@ public class PrimaryController implements Initializable {
     @FXML
     private void openFile() {
         try {
+            SheetUtils.pause();
             File source = LoadFileRenderer.renderMidiChooser();
             AbstractModeController controller = LoadFileRenderer.renderModeChooser();
             GameModeUtils.setGameMode(controller);

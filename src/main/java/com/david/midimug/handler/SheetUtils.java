@@ -30,11 +30,13 @@ import javax.sound.midi.InvalidMidiDataException;
  */
 public class SheetUtils {
 
-    private static Timeline timeline;
+    private static Timeline timeline = new Timeline();
 
     public static void setupSheet(Pane pane, File source) throws InvalidMidiDataException, IOException {
         Sheet music_sheet = MidiUtils.getSheet(source);
-        timeline = SheetRenderer.renderBarSheet(pane, music_sheet);
+        timeline.stop();
+        timeline.getKeyFrames().clear();
+        SheetRenderer.renderBarSheet(pane, music_sheet, timeline);
     }
 
     public static void play() {
@@ -42,7 +44,7 @@ public class SheetUtils {
     }
 
     public static void pause() {
-        timeline.pause();
+        if(timeline != null) timeline.pause();
     }
 
     public static Duration getCurrentTime() {

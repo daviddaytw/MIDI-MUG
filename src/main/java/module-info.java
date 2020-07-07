@@ -20,6 +20,7 @@ module com.david.midimug {
     requires javafx.fxml;
     requires java.base;
     requires java.desktop;
+    requires java.prefs;
 
     opens com.david.midimug to javafx.fxml;
     exports com.david.midimug;

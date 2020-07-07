@@ -18,6 +18,7 @@ package com.david.midimug.handler;
 
 import com.david.midimug.gamemode.AbstractModeController;
 import java.util.ArrayList;
+import java.util.prefs.Preferences;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -32,6 +33,7 @@ import javax.sound.midi.Transmitter;
 public class MidiDevices {
 
     private static MidiDevice selected = null;
+    private static Preferences prefs = Preferences.userNodeForPackage(MidiDevices.class);
 
     public static ArrayList<MidiDevice> getDevices() {
         ArrayList<MidiDevice> devicesList = new ArrayList<>();
@@ -43,6 +45,9 @@ public class MidiDevices {
 
                 // specify hardware MIDI port
                 if (!(device instanceof Sequencer) && !(device instanceof Synthesizer)) {
+                    if(i.getName().equals(prefs.get("SELECTED", "NONE"))){
+                        selectDevice(device);
+                    }
                     devicesList.add(device);
                 }
             } catch (MidiUnavailableException ex) {
@@ -58,6 +63,7 @@ public class MidiDevices {
         if (selected.isOpen()) {
             selected.close();
         }
+        prefs.put("SELECTED", device.getDeviceInfo().getName());
         selected.open();
     }
 
