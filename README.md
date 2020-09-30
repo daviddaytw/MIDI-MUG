@@ -24,7 +24,7 @@ Extract the zip fie, go to `bin` folder, and execute `MIDI_MUG`!
 ### Play
 
 In `File` -> `Open...` select a MIDI file you want to play with.
-You can use your MIDI file or download it in the following site!
+You can use your MIDI file or download it from the following sites!
 
 -   [BitMidi](https://bitmidi.com/)
 -   [midiworld.com](https://www.midiworld.com/)
