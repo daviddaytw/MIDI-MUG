@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug.render;
+package tw.davidday.midimug.render;
 
-import com.david.midimug.gamemode.AbstractModeController;
-import com.david.midimug.handler.Channel;
-import com.david.midimug.handler.GameModeUtils;
-import com.david.midimug.handler.Note;
-import com.david.midimug.handler.Sheet;
+import tw.davidday.midimug.gamemode.AbstractModeController;
+import tw.davidday.midimug.handler.Channel;
+import tw.davidday.midimug.handler.GameModeUtils;
+import tw.davidday.midimug.handler.Note;
+import tw.davidday.midimug.handler.Sheet;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.animation.Timeline;

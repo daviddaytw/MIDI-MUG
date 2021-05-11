@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug;
+package tw.davidday.midimug;
 
-import com.david.midimug.handler.MidiDevices;
+import tw.davidday.midimug.handler.MidiDevices;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

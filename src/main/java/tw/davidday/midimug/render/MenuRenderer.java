@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug.render;
+package tw.davidday.midimug.render;
 
-import com.david.midimug.handler.GameModeUtils;
-import com.david.midimug.handler.MidiDevices;
-import com.david.midimug.handler.MidiInstruments;
+import tw.davidday.midimug.handler.GameModeUtils;
+import tw.davidday.midimug.handler.MidiDevices;
+import tw.davidday.midimug.handler.MidiInstruments;
 import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

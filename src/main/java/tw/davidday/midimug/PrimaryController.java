@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug;
+package tw.davidday.midimug;
 
-import com.david.midimug.gamemode.AbstractModeController;
-import com.david.midimug.handler.GameModeUtils;
-import com.david.midimug.handler.SheetUtils;
-import com.david.midimug.render.KeyboardRenderer;
-import com.david.midimug.render.LoadFileRenderer;
-import com.david.midimug.render.MenuRenderer;
+import tw.davidday.midimug.gamemode.AbstractModeController;
+import tw.davidday.midimug.handler.GameModeUtils;
+import tw.davidday.midimug.handler.SheetUtils;
+import tw.davidday.midimug.render.KeyboardRenderer;
+import tw.davidday.midimug.render.LoadFileRenderer;
+import tw.davidday.midimug.render.MenuRenderer;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -63,7 +63,7 @@ public class PrimaryController implements Initializable {
     }
 
     @FXML
-    private void openFile() {
+    public void openFile() {
         try {
             SheetUtils.pause();
             File source = LoadFileRenderer.renderMidiChooser();
@@ -79,12 +79,12 @@ public class PrimaryController implements Initializable {
     }
 
     @FXML
-    private void refreshDevices() {
+    public void refreshDevices() {
         MenuRenderer.renderDevicesMenu(devicesMenu);
     }
 
     @FXML
-    private void exit() {
+    public void exit() {
         Platform.exit();
     }
 }

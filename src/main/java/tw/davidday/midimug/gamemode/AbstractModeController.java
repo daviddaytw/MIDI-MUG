@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug.gamemode;
+package tw.davidday.midimug.gamemode;
 
-import com.david.midimug.handler.Note;
+import tw.davidday.midimug.handler.Note;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;

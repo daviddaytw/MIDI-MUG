@@ -15,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-module com.david.midimug {
+module tw.davidday.midimug {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.base;
     requires java.desktop;
     requires java.prefs;
 
-    opens com.david.midimug to javafx.fxml;
-    exports com.david.midimug;
+    opens tw.davidday.midimug to javafx.fxml;
+    exports tw.davidday.midimug;
 }

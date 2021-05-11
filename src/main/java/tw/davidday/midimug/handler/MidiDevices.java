@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug.handler;
+package tw.davidday.midimug.handler;
 
-import com.david.midimug.gamemode.AbstractModeController;
+import tw.davidday.midimug.gamemode.AbstractModeController;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 import javax.sound.midi.MidiDevice;

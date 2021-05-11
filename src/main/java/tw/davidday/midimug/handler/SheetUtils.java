@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug.handler;
+package tw.davidday.midimug.handler;
 
-import com.david.midimug.render.SheetRenderer;
+import tw.davidday.midimug.render.SheetRenderer;
 import java.io.File;
 import java.io.IOException;
 import javafx.animation.Timeline;

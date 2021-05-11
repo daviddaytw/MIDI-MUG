@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug.render;
+package tw.davidday.midimug.render;
 
 import java.util.HashMap;
 import javafx.collections.ObservableList;

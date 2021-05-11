@@ -14,36 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug.handler;
+package tw.davidday.midimug.handler;
+
+import tw.davidday.midimug.gamemode.AbstractModeController;
+import tw.davidday.midimug.gamemode.FluidModeController;
+import javax.sound.midi.MidiUnavailableException;
 
 /**
  *
  * @author david
  */
-public class Sheet {
+public class GameModeUtils {
 
-    private final int resolution;
-    private final Channel[] channels;
-    private final long length;
+    private static final AbstractModeController DEFAULT = new FluidModeController();
+    private static AbstractModeController controller = DEFAULT;
 
-    Sheet(Channel[] channels, int resolution, long length) {
-        this.channels = channels;
-        this.resolution = resolution;
-        if (resolution == -1) {
-            System.err.println("Bad resolution!");
-        }
-        this.length = length;
+    public static void setGameMode(AbstractModeController mode) throws MidiUnavailableException {
+        controller = mode;
+        MidiDevices.setGameController(controller);
     }
 
-    public int getResolution() {
-        return resolution;
-    }
-
-    public Channel[] getChannels() {
-        return channels;
-    }
-
-    public long getLength() {
-        return length;
+    public static AbstractModeController getGameMode() {
+        return controller;
     }
 }

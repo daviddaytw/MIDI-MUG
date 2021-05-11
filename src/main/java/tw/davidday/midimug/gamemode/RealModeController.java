@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.david.midimug.gamemode;
+package tw.davidday.midimug.gamemode;
 
-import com.david.midimug.handler.MidiInstruments;
-import com.david.midimug.handler.Note;
-import com.david.midimug.handler.SheetUtils;
-import com.david.midimug.render.KeyboardRenderer;
-import com.david.midimug.render.SheetRenderer;
+import tw.davidday.midimug.handler.MidiInstruments;
+import tw.davidday.midimug.handler.Note;
+import tw.davidday.midimug.handler.SheetUtils;
+import tw.davidday.midimug.render.KeyboardRenderer;
+import tw.davidday.midimug.render.SheetRenderer;
 import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
