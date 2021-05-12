@@ -16,25 +16,30 @@
  */
 package tw.davidday.midimug;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.Timer;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.Pane;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import tw.davidday.midimug.gamemode.AbstractModeController;
 import tw.davidday.midimug.handler.GameModeUtils;
 import tw.davidday.midimug.handler.SheetUtils;
 import tw.davidday.midimug.render.KeyboardRenderer;
 import tw.davidday.midimug.render.LoadFileRenderer;
 import tw.davidday.midimug.render.MenuRenderer;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Menu;
-import javafx.scene.layout.Pane;
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiUnavailableException;
+import tw.davidday.midimug.render.ProgressRenderer;
 
 /**
  * FXML Controller class
@@ -48,9 +53,17 @@ public class PrimaryController implements Initializable {
     @FXML
     private Menu devicesMenu;
     @FXML
-    private Pane keyboard;
+    private ToolBar toolbar;
+    @FXML
+    private Label infoLabel;
+    @FXML
+    private ProgressBar progress;
+    private Timer progressTimer;
+
     @FXML
     private Pane sheet;
+    @FXML
+    private Pane keyboard;
 
     /**
      * Initializes the controller class.
@@ -70,12 +83,57 @@ public class PrimaryController implements Initializable {
             AbstractModeController controller = LoadFileRenderer.renderModeChooser();
             GameModeUtils.setGameMode(controller);
             SheetUtils.setupSheet(sheet, source);
-            SheetUtils.play();
+
+            progressTimer = new Timer();
+            progressTimer.schedule(new ProgressRenderer(progress), 0, 50);
+
+            toolbar.setDisable(false);
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException ex) {
             final Alert alert = new Alert(AlertType.ERROR);
             alert.setContentText(ex.getLocalizedMessage());
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    public void play() {
+        SheetUtils.play();
+    }
+
+    @FXML
+    public void pause() {
+        SheetUtils.pause();
+    }
+
+    @FXML
+    public void replay() {
+        SheetUtils.replay();
+    }
+
+    @FXML
+    public void speedUp() {
+        SheetUtils.setRate(SheetUtils.getRate() + 0.25);
+        updateInfo();
+    }
+
+    @FXML
+    public void slowDown() {
+        SheetUtils.setRate(Math.max(SheetUtils.getRate() - 0.25, 0.25));
+        updateInfo();
+    }
+
+    @FXML
+    public void forward() {
+        SheetUtils.shift(1);
+    }
+
+    @FXML
+    public void backward() {
+        SheetUtils.shift(-1);
+    }
+
+    private void updateInfo() {
+        infoLabel.setText("Current Speed: " + SheetUtils.getRate() + "x");
     }
 
     @FXML

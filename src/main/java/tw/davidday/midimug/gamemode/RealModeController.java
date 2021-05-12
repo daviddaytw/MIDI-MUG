@@ -85,12 +85,6 @@ public class RealModeController extends AbstractModeController {
     @Override
     public void onUserPress(int key) {
         if (note_start[key] != NOTE_OFF) {
-            double currentMillis = SheetUtils.getCurrentTime().toMillis();
-            double length = note_end[key] - note_start[key];
-            double accuracy = length - (currentMillis - note_start[key]);
-            int score = (int) Math.round(1000 * accuracy / length);
-            SheetRenderer.renderCombo(Integer.toString(score), Color.CORAL);
-
             note_start[key] = NOTE_OFF;
         }
         KeyboardRenderer.pressKey(key);

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tw.davidday.midimug.PrimaryController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tw.davidday.midimug.PrimaryController">
     <children>
         <MenuBar>
             <menus>
@@ -26,6 +30,19 @@
                 </Menu>
             </menus>
         </MenuBar>
+        <ToolBar fx:id="toolbar" disable="true" prefHeight="40.0" prefWidth="200.0">
+            <items>
+                <Button mnemonicParsing="false" onAction="#play" text="Play" />
+                <Button mnemonicParsing="false" onAction="#pause" text="Pause" />
+                <Button mnemonicParsing="false" onAction="#replay" text="Re-Play" />
+                <Button mnemonicParsing="false" onAction="#speedUp" text="Speed Up" />
+                <Button mnemonicParsing="false" onAction="#slowDown" text="Slow Down" />
+                <Button mnemonicParsing="false" onAction="#forward" text="Forward" />
+                <Button mnemonicParsing="false" onAction="#backward" text="Backward " />
+                <Label fx:id="infoLabel" text="Current Speed: 1x" />
+            </items>
+        </ToolBar>
+        <ProgressBar fx:id="progress" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" progress="0.0" VBox.vgrow="ALWAYS" />
         <Pane fx:id="sheet" style="-fx-background-color: #121212;" VBox.vgrow="ALWAYS" />
         <Pane fx:id="keyboard" minHeight="150.0" prefHeight="150.0" style="-fx-background-color: #121212;" />
     </children>

@@ -16,13 +16,13 @@
  */
 package tw.davidday.midimug.handler;
 
-import tw.davidday.midimug.render.SheetRenderer;
 import java.io.File;
 import java.io.IOException;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javax.sound.midi.InvalidMidiDataException;
+import tw.davidday.midimug.render.SheetRenderer;
 
 /**
  *
@@ -30,24 +30,50 @@ import javax.sound.midi.InvalidMidiDataException;
  */
 public class SheetUtils {
 
-    private static Timeline timeline = new Timeline();
+    private static final Timeline timeline = new Timeline();
+    private static Sheet musicSheet;
+    private static Pane pane;
 
     public static void setupSheet(Pane pane, File source) throws InvalidMidiDataException, IOException {
-        Sheet music_sheet = MidiUtils.getSheet(source);
-        timeline.stop();
-        timeline.getKeyFrames().clear();
-        SheetRenderer.renderBarSheet(pane, music_sheet, timeline);
+        SheetUtils.musicSheet = MidiUtils.getSheet(source);
+        SheetUtils.pane = pane;
+        SheetUtils.replay();
     }
 
     public static void play() {
         timeline.play();
     }
 
+    public static void replay() {
+        timeline.stop();
+        timeline.getKeyFrames().clear();
+        SheetRenderer.renderBarSheet(pane, musicSheet, timeline);
+        timeline.playFromStart();
+    }
+
     public static void pause() {
-        if(timeline != null) timeline.pause();
+        if (timeline != null) {
+            timeline.pause();
+        }
+    }
+
+    public static double getRate() {
+        return timeline.getRate();
+    }
+
+    public static void setRate(double d) {
+        timeline.setRate(d);
+    }
+
+    public static void shift(double d) {
+        timeline.playFrom(timeline.getCurrentTime().add(Duration.seconds(d)));
     }
 
     public static Duration getCurrentTime() {
         return timeline.getCurrentTime();
+    }
+
+    public static Duration getTotalTime() {
+        return timeline.getCycleDuration();
     }
 }

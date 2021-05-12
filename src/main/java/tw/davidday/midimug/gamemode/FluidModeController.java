@@ -16,11 +16,6 @@
  */
 package tw.davidday.midimug.gamemode;
 
-import tw.davidday.midimug.handler.MidiInstruments;
-import tw.davidday.midimug.handler.Note;
-import tw.davidday.midimug.handler.SheetUtils;
-import tw.davidday.midimug.render.KeyboardRenderer;
-import tw.davidday.midimug.render.SheetRenderer;
 import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -28,9 +23,11 @@ import javafx.animation.Timeline;
 import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import tw.davidday.midimug.handler.MidiInstruments;
+import tw.davidday.midimug.handler.Note;
+import tw.davidday.midimug.render.KeyboardRenderer;
 
 /**
  *
@@ -89,12 +86,6 @@ public class FluidModeController extends AbstractModeController {
     @Override
     public void onUserPress(int key) {
         if (note_start[key] != NOTE_OFF) {
-            double currentMillis = SheetUtils.getCurrentTime().toMillis();
-            double length = note_end[key] - note_start[key];
-            double accuracy = length - (currentMillis - note_start[key]);
-            int score = (int) Math.round(1000 * accuracy / length);
-            SheetRenderer.renderCombo(Integer.toString(score), Color.CORAL);
-
             note_start[key] = NOTE_OFF;
         }
         KeyboardRenderer.pressKey(key);
