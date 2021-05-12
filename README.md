@@ -2,7 +2,6 @@
 
 ![Build with Maven](https://github.com/dj6082013/MIDI-MUG/workflows/Build%20with%20Maven/badge.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c1d57b47c2fd44a3a5d9cbfdee44d22e)](https://app.codacy.com/manual/dj6082013/MIDI-MUG?utm_source=github.com&utm_medium=referral&utm_content=dj6082013/MIDI-MUG&utm_campaign=Badge_Grade_Settings)
-[![Gitter](https://badges.gitter.im/MIDI-MUG/community.svg)](https://gitter.im/MIDI-MUG/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![GitHub release](https://img.shields.io/github/release/dj6082013/MIDI-MUG.svg)](https://GitHub.com/dj6082013/MIDI-MUG/releases/)
 [![GitHub license](https://img.shields.io/github/license/dj6082013/MIDI-MUG.svg)](https://github.com/dj6082013/MIDI-MUG/blob/master/LICENSE)
 [![Github all releases](https://img.shields.io/github/downloads/dj6082013/MIDI-MUG/total.svg)](https://github.com/dj6082013/MIDI-MUG/releases/)
