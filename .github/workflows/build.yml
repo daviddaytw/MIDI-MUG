@@ -8,23 +8,27 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        java_version: [11]
+
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 11
+    - name: Set up JDK
       uses: actions/setup-java@v1
       with:
-        java-version: '11.0.2'
+        java-version: ${{ matrix.java_version }}
     - name: Check Maven dependencies update
       run: mvn -B versions:display-dependency-updates
     - name: Compile with Maven
       run: mvn -B compile
     - name: Build with Maven
       run: mvn -B javafx:jlink
+    - name: Package with Maven
+      run: mvn package
     - uses: actions/upload-artifact@v1
       with:
-        name: ${{ matrix.os }}
-        path: target/MIDI-MUG
+        name: ${{ matrix.java_version }}
+        path: target
