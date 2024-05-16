@@ -8,18 +8,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
-        java_version: [11]
+        platform: [ubuntu-latest, macos-latest]
 
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK
       uses: actions/setup-java@v1
       with:
-        java-version: ${{ matrix.java_version }}
+        java-version: 11
     - name: Check Maven dependencies update
       run: mvn -B versions:display-dependency-updates
     - name: Compile with Maven
@@ -28,7 +27,7 @@ jobs:
       run: mvn -B javafx:jlink
     - name: Package with Maven
       run: mvn package
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.java_version }}
+        name: ${{ matrix.platform }}
         path: target
