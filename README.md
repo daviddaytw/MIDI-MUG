@@ -18,7 +18,13 @@ This simple instruction will set you ready to play in a few minutes!
 
 Just go to [Release Page](https://github.com/dj6082013/MIDI-MUG/releases/) and download the latest stable version.
 
-Extract the zip fie, go to `bin` folder, and execute `MIDI_MUG`!
+Extract the zip fie, and execute the jar!
+
+If click on the JAR file doesn't work, run with the following command.
+
+```sh
+jar -jar MIDI-MUG-1.0-SNAPSHOT.jar
+```
 
 ### Play
 
