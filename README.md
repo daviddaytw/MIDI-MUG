@@ -8,6 +8,8 @@
 
 Play music game with your MIDI keyboard!
 
+**❗❗ Abandoned: Recommend to check out https://midiano.com !**
+
 ## Getting Start
 
 This simple instruction will set you ready to play in a few minutes!
